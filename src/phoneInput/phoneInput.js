@@ -196,5 +196,5 @@
             templateUrl: "src/phoneInput/phoneInput.html",
         }
     }
-    angular.module('ui.controls').directive('phoneInput', ['$timeout', phoneInput])
+    angular.module('ui.controls').directive('phoneInput', ['$timeout',  phoneInput])
 })();
