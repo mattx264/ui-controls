@@ -127,6 +127,5 @@
             templateUrl: "src/ssnInput/ssnInput.html",
         }
     }
-
     angular.module('ui.controls').directive('ssnInput', ['$compile',ssnInput]);
 })();
