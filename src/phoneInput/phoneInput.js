@@ -12,7 +12,7 @@
                         scope.jumpToNextField = false;
                         scope.isSelected = false;
                         scope.idOfElement = Math.floor(Math.random() * 1000000);
-                        scope.cecphoneinput1 = scope.cecphoneinput2 = scope.cecphoneinput3 = "";
+                        scope.phoneinput1 = scope.phoneinput2 = scope.phoneinput3 = "";
                         scope.stringNumber = ["", "", ""];
                         iElement.attr("id", scope.idOfElement);
                         var reg = /[^0-9]/g;
@@ -21,28 +21,28 @@
                                 var re = /[^0-9]/;
                                 var justNumber = scope.ngModel.split(re).join('');
                                 //scope.updateModel
-                                scope.stringNumber[0] = scope.cecphoneinput1 = justNumber.substr(0, 3);
-                                scope.stringNumber[1] = scope.cecphoneinput2 = justNumber.substr(3, 3);
-                                scope.stringNumber[2] = scope.cecphoneinput3 = justNumber.substr(6, 4);
+                                scope.stringNumber[0] = scope.phoneinput1 = justNumber.substr(0, 3);
+                                scope.stringNumber[1] = scope.phoneinput2 = justNumber.substr(3, 3);
+                                scope.stringNumber[2] = scope.phoneinput3 = justNumber.substr(6, 4);
                                 unbindWatcher();//after init we dont need it
                                 scope.updateModel();
                                 scope.validation();
                             }
                         });
-                        scope.cecphoneinput1Change = function (text) {
+                        scope.phoneinput1Change = function (text) {
 
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecphoneinput1').val();
+                                text = $('#' + scope.idOfElement + ' .phoneinput1').val();
                             }
-                            scope.cecphoneinput1 = text = text.replace(reg, '');
+                            scope.phoneinput1 = text = text.replace(reg, '');
 
                             var textLength = text.length;
                             if (textLength == 3) {
-                                $("#" + scope.idOfElement + " .cecphoneinput2").select();
+                                $("#" + scope.idOfElement + " .phoneinput2").select();
                             }
                             else if (textLength > 3) {
-                                scope.cecphoneinput1 = text = scope.cecphoneinput1.toString().substring(0, 3);
-                                $("#" + scope.idOfElement + " .cecphoneinput2").select();
+                                scope.phoneinput1 = text = scope.phoneinput1.toString().substring(0, 3);
+                                $("#" + scope.idOfElement + " .phoneinput2").select();
                             }
                             if (scope.stringNumber[0] != text) {
                                 scope.isEwc.isEwc = false;
@@ -51,20 +51,20 @@
                             scope.updateModel();
                         }
 
-                        scope.cecphoneinput2Change = function (text) {
+                        scope.phoneinput2Change = function (text) {
 
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecphoneinput2').val();
+                                text = $('#' + scope.idOfElement + ' .phoneinput2').val();
                             }
-                            scope.cecphoneinput2 = text = text.replace(reg, '');
+                            scope.phoneinput2 = text = text.replace(reg, '');
 
                             var textLength = text.length;
                             if (textLength == 3) {
-                                $("#" + scope.idOfElement + " .cecphoneinput3").select();
+                                $("#" + scope.idOfElement + " .phoneinput3").select();
                             }
                             else if (textLength > 3) {
-                                scope.cecphoneinput2 = text = scope.cecphoneinput2.toString().substring(0, 3);
-                                $("#" + scope.idOfElement + " .cecphoneinput3").select();
+                                scope.phoneinput2 = text = scope.phoneinput2.toString().substring(0, 3);
+                                $("#" + scope.idOfElement + " .phoneinput3").select();
                             }
                             if (scope.stringNumber[1] != text) {
                                 scope.isEwc.isEwc = false;
@@ -72,18 +72,18 @@
                             scope.stringNumber[1] = text;
                             scope.updateModel();
                         }
-                        scope.cecphoneinput3Change = function (text) {
+                        scope.phoneinput3Change = function (text) {
 
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecphoneinput3').val();
+                                text = $('#' + scope.idOfElement + ' .phoneinput3').val();
                             }
-                            scope.cecphoneinput3 = text = text.replace(reg, '');
+                            scope.phoneinput3 = text = text.replace(reg, '');
 
                             var textLength = text.length;
 
                             if (textLength > 4) {
-                                scope.cecphoneinput3 = text = scope.cecphoneinput3.substring(0, 4);
-                                scope.stringNumber[2] = scope.cecphoneinput3.toString();
+                                scope.phoneinput3 = text = scope.phoneinput3.substring(0, 4);
+                                scope.stringNumber[2] = scope.phoneinput3.toString();
                             }
                            
                             if (scope.stringNumber[2] != text) {
@@ -101,7 +101,7 @@
                         }
                         scope.validation = function () {
 
-                            if (scope.cecphoneinput3 == null || scope.cecphoneinput2 == null || scope.cecphoneinput1 == null) {
+                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
                                 controller.$setValidity('required', false);
                                 return;
                             }
@@ -122,7 +122,7 @@
 
                         }
                         scope.validationOnlyinvalid = function () {
-                            if (scope.cecphoneinput3 == null || scope.cecphoneinput2 == null || scope.cecphoneinput1 == null) {
+                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
                                 controller.$setValidity('invalid', false);
                                 return;
                             }

@@ -11,7 +11,7 @@
                     post: function postLink(scope, iElement, iAttrs, controller) {
                         scope.idOfElement = Math.floor(Math.random() * 1000000);
                         scope.isSelected = false;
-                        scope.cecssninput1 = scope.cecssninput2 =scope.cecssninput3= "";
+                        scope.ssninput1 = scope.ssninput2 =scope.ssninput3= "";
                         var reg=/[^0-9]/g;
                         iElement.attr("id", scope.idOfElement);
                         scope.$watch('ngModel', function (newVal) {
@@ -19,61 +19,61 @@
                               
                             }else if (newVal == null) {
                                 if (scope.ngModel == null) {
-                                    scope.cecssninput1 = scope.cecssninput2 = scope.cecssninput3 = "";
+                                    scope.ssninput1 = scope.ssninput2 = scope.ssninput3 = "";
                                 }
                             }
                         });
-                        scope.cecssninput1Change = function (text) {
+                        scope.ssninput1Change = function (text) {
 
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecssninput1').val();
+                                text = $('#' + scope.idOfElement + ' .ssninput1').val();
                             }
-                            scope.cecssninput1 = text = text.replace(reg, '');
+                            scope.ssninput1 = text = text.replace(reg, '');
                             scope.updateModel();
                             var textLength = text.length;
                             if (textLength == 3) {
                                
-                                $("#" + scope.idOfElement + " .cecssninput2").select();
+                                $("#" + scope.idOfElement + " .ssninput2").select();
                             }
                             else if (textLength > 3) {
-                                scope.cecssninput1 = Number(scope.cecssninput1.toString().substring(0, 3));
+                                scope.ssninput1 = Number(scope.ssninput1.toString().substring(0, 3));
                                 scope.updateModel();
-                                $("#" + scope.idOfElement + " .cecssninput2").select();
+                                $("#" + scope.idOfElement + " .ssninput2").select();
                             }
                         }
-                        scope.cecssninput2Change = function (text) {
+                        scope.ssninput2Change = function (text) {
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecssninput2').val();
+                                text = $('#' + scope.idOfElement + ' .ssninput2').val();
                             }
-                            scope.cecssninput2 = text = text.replace(reg, '');
+                            scope.ssninput2 = text = text.replace(reg, '');
                             scope.updateModel();
                             var textLength = text.length
                             if (textLength == 2) {
                                 
-                                $("#" + scope.idOfElement + " .cecssninput3").select();
+                                $("#" + scope.idOfElement + " .ssninput3").select();
                             }
                             else if (textLength > 2) {
-                                scope.cecssninput2 = Number(scope.cecssninput2.toString().substring(0, 2));
+                                scope.ssninput2 = Number(scope.ssninput2.toString().substring(0, 2));
                                 scope.updateModel();
-                                $("#" + scope.idOfElement + " .cecssninput3").select();
+                                $("#" + scope.idOfElement + " .ssninput3").select();
                             }
                         }
-                        scope.cecssninput3Change = function (text) {
+                        scope.ssninput3Change = function (text) {
 
                             if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .cecssninput3').val();
+                                text = $('#' + scope.idOfElement + ' .ssninput3').val();
                             }
-                            scope.cecssninput3 = text = text.replace(reg, '');
+                            scope.ssninput3 = text = text.replace(reg, '');
                             scope.updateModel();
                             var textLength = text.length
                             if (textLength > 4) {
-                                scope.cecssninput3 = Number(scope.cecssninput3.toString().substring(0, 4));
+                                scope.ssninput3 = Number(scope.ssninput3.toString().substring(0, 4));
                                 scope.updateModel();
 
                             }
                         }
                         scope.updateModel = function () {
-                            scope.ngModel = scope.cecssninput1+"-"+scope.cecssninput2+"-"+scope.cecssninput3
+                            scope.ngModel = scope.ssninput1+"-"+scope.ssninput2+"-"+scope.ssninput3
                         }
                         scope.$watch(function (scope) { return scope.focus }, function (newValue) {
                             if (newValue == true && scope.jumpToNextField == false) {
@@ -86,21 +86,21 @@
                         scope.validation = function () {
                             controller.$setValidity('invalid', true);
                             controller.$setValidity('required', true);
-                            if (scope.cecssninput3 == null || scope.cecssninput2 == null || scope.cecssninput1 == null) {
+                            if (scope.ssninput3 == null || scope.ssninput2 == null || scope.ssninput1 == null) {
                                 controller.$setValidity('required', false);
                                 return;
                             }
-                            if (scope.cecssninput3.toString().length < 4) {
+                            if (scope.ssninput3.toString().length < 4) {
                               
                                 controller.$setValidity('invalid', false);
                                 return;
                             }
-                            if (scope.cecssninput1.toString().length > 3 || scope.cecssninput1.toString().length < 1) {
+                            if (scope.ssninput1.toString().length > 3 || scope.ssninput1.toString().length < 1) {
                               
                                 controller.$setValidity('invalid', false);
                                 return;
                             }
-                            if (scope.cecssninput2.toString().length > 2 || scope.cecssninput2.toString().length < 1) {
+                            if (scope.ssninput2.toString().length > 2 || scope.ssninput2.toString().length < 1) {
                              
                                 controller.$setValidity('invalid', false);
                                 return;
