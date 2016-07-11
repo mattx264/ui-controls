@@ -1,5 +1,18 @@
-var gulp = require('gulp');
+var gulp = require('gulp'),
+  concat = require('gulp-concat'),
+  uglify = require('gulp-uglify');
 
-gulp.task('default', function() {
-  // place code for your default task here
+var src='./src/**/*.js',
+    dest='./dist/'
+gulp.task('min', function () {
+  gulp.src(src)
+    .pipe(concat('ui-controls.min.js'))
+    .pipe(uglify())
+   
+    .pipe(gulp.dest(dest));
+})
+gulp.task('default', function () {
+  return gulp.src(src)
+    .pipe(concat('ui-controls.js'))
+    .pipe(gulp.dest(dest));
 });

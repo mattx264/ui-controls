@@ -1,0 +1,25 @@
+{
+  "name": "ui-controls",
+  "version": "1.0.0",
+  "description": "Native AngularJS (Angular) directives fields: phone, grid, highlight text, side navigation, ssn (Social Security number).",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "2.6.0",
+    "gulp-uglify":"1.5.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattx264/ui-controls.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattx264/ui-controls/issues"
+  },
+  "homepage": "https://github.com/mattx264/ui-controls#readme"
+}
