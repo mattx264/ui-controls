@@ -1,3 +1,8 @@
+
+(function () {
+    'use strict';
+    angular.module('ui.controls',[]);
+})();
 (function () {
     'use strict';
     function dateInput($timeout) {
@@ -473,7 +478,7 @@
             }
         }
     }
-    angular.module('ui.controls').directive('showPassword', [cecShowPassword]);
+    angular.module('ui.controls').directive('showPassword', [showPassword]);
 })();
 (function () {
     'use strict';

@@ -21,5 +21,5 @@
             }
         }
     }
-    angular.module('ui.controls').directive('showPassword', [cecShowPassword]);
+    angular.module('ui.controls').directive('showPassword', [showPassword]);
 })();
