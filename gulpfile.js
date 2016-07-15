@@ -17,9 +17,12 @@ gulp.task('min', function () {
 })
 gulp.task('default', function () {
   gulp.src('./src/**/*.html')
-    .pipe(templateCache())
+    .pipe(templateCache('templates.js',{'root':'src','module':"ui.controls"}))
     .pipe(gulp.dest(dest))
-  return gulp.src(src)
+   gulp.src(src)
     .pipe(concat('ui-controls.js'))
     .pipe(gulp.dest(dest));
+     gulp.src(dest+'*.js')
+     .pipe(gulp.dest('./demo/js'));
+     
 });

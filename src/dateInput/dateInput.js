@@ -6,7 +6,7 @@
             replace: true,
             require: 'ngModel',
             scope: { ngModel: '=', name: '@' },
-            templateUrl: "Angular/Directive/-date-input-template.html",
+            templateUrl: "src/dateInput/dateInput.html",
 
             compile: function compile(tElement, tAttrs, transclude) {
                 return {
@@ -105,14 +105,6 @@
 
                         scope.updateModel = function () {
 
-                            //if (scope.dateinput1 != null)
-                            //    if (scope.dateinput1.toString().length == 1 && scope.dateinput1.toString() != "0") {
-                            //        scope.dateinput1 = "0" + scope.dateinput1.toString();
-                            //    }
-                            //if (scope.dateinput2 != null)
-                            //    if (scope.dateinput2.toString().length == 1 && scope.dateinput2.toString() != "0") {
-                            //        scope.dateinput2 = "0" + scope.dateinput2.toString();
-                            //    }
                             scope.ngModelDate = new Date(scope.dateinput3, scope.dateinput1 - 1, scope.dateinput2);
                             scope.ngModel = scope.dateinput1 + "/" + scope.dateinput2 + "/" + scope.dateinput3;
                         }
@@ -166,24 +158,30 @@
                                 controller.$setValidity('invalid', false);
                                 return;
                             }
-                            if (iAttrs.checkfuturedate) {
+                            if (iAttrs.checkfuturedate=="true") {
                                 var currentDate = new Date();
 
                                 if (currentDate < scope.ngModelDate) {
                                     if (currentDate.getFullYear() < scope.ngModelDate.getFullYear()) {
-                                        controller.$error = { "other": "Year is invalid." };
+                                      //  controller.$error = { "futuredateValidation": "Year is invalid." };
+                                       controller.$setValidity('futuredateValidation', false);
+                                       return;
                                     }
                                     else if (currentDate.getMonth() < scope.ngModelDate.getMonth()) {
-                                        controller.$error = { "other": "Month is invalid." };
+                                       // controller.$error = { "futuredateValidation": "Month is invalid." };
+                                        controller.$setValidity('futuredateValidation', false);
+                                        return;
                                     }
                                     else if (currentDate.getDate() < scope.ngModelDate.getDate()) {
-                                        controller.$error = { "other": "Day is invalid." };
+                                       // controller.$error = { "futuredateValidation": "Day is invalid." };
+                                        controller.$setValidity('futuredateValidation', false);
+                                        return;
                                     }
-                                    controller.$setValidity('invalid', false);
-                                    return;
+                                    controller.$setValidity('futuredateValidation', true);
+                                   
                                 }
                             }
-                            if (iAttrs.$attr.fifteenyearsvalidation) {
+                            if (iAttrs.fifteenyearsvalidation=="true") {
 
                                 var tempDate = new Date(scope.ngModelDate.getFullYear() + 16, scope.ngModelDate.getMonth(), scope.ngModelDate.getDate());
                                 var todayDate = new Date();
