@@ -13,71 +13,117 @@
 </head>
 
 <body ng-app="app" ng-controller="demo">
-    <form name="form" class="container">
-        <h4 class="row">
-            Date:
-        </h4>
-        <div class="row">
-            <div class="col-md-6">
-                <div ng-show="form.$submitted  || form.Date.$touched">
-                    <div ng-show="form.Date.$error.required" class="well well-sm cec-message-error">
-                        Date is required.
+    <div class="well well-sm">
+        <form name="form" class="container">
+            <h4 class="row">
+                Date:
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-show="form.$submitted  || form.Date.$touched">
+                        <div ng-show="form.Date.$error.required" class="well well-sm cec-message-error">
+                            Date is required.
+                        </div>
+                        <div ng-show="form.Date.$error.other" class="well well-sm cec-message-error">
+                            {{form.Date.$error.other}}
+                        </div>
+                        <div ng-show="form.Date.$error.fifteenyearsvalidationMessage" class="well well-sm cec-message-error">
+                            fifteen years validation Message.
+                        </div>
+                        <div ng-show="form.Date.$error.futuredateValidation" class="well well-sm cec-message-error">
+                            future date Validation Message - Your birthday cannot be in future.
+                        </div>
+                        <div ng-repeat="error in form.Date.$error.errorMessages" class="well well-sm cec-message-error">
+                            {{error}}
+                        </div>
+
                     </div>
-                    <div ng-show="form.Date.$error.other" class="well well-sm cec-message-error">
-                        {{form.Date.$error.other}}
+                    <div class="col">
+                        <div class="col-md-8">
+                            <date-input ng-model="date.data" name="Date" checkfuturedate="{{date.ischeckfuturedate}}" fifteenyearsvalidation="{{date.isfifteenyearsvalidation}}"
+                                ng-required="date.isRequired"></date-input>
+                        </div>
                     </div>
-                    <div ng-show="form.Date.$error.fifteenyearsvalidationMessage" class="well well-sm cec-message-error">
-                        fifteen years validation Message.
-                    </div>
-                     <div ng-show="form.Date.$error.futuredateValidation" class="well well-sm cec-message-error">
-                       future date Validation Message - Your birthday cannot be in future.
-                    </div>
-                    <div ng-repeat="error in form.Date.$error.errorMessages" class="well well-sm cec-message-error">
-                        {{error}}
-                    </div>
-                   
                 </div>
-                <div class="col">
-                    <div class="col-md-8">
-                        <date-input ng-model="date.data" name="Date" checkfuturedate="{{date.ischeckfuturedate}}" 
-                        fifteenyearsvalidation="{{date.isfifteenyearsvalidation}}"
-                        ng-required="date.isRequired"></date-input>
+                <div class="col-md-6">
+                    <div class="well">
+                        <h4>Description:</h4>
+                        <div>UI controll for user date input...</div>
+                        <h4>Options:</h4>
+                        <ul>
+                            <li>
+                                <h5>Required:</h5>
+                                <input type="checkbox" ng-model="date.isRequired"> Turn on/off - if field is required
+                            </li>
+                            <li>
+                                <h5>checkfuturedate:</h5>
+                                <input type="checkbox" ng-model="date.ischeckfuturedate"> Turn on/off - if date is future
+                            </li>
+                            <li>
+                                <h5>Fifteen Years:</h5>
+                                <input type="checkbox" ng-model="date.isfifteenyearsvalidation"> Turn on/off - if date is
+                                more than fifteen years.
+                            </li>
                     </div>
                 </div>
             </div>
-             <div class="col-md-6">
-                <div class="well">
-                    <h4>Description:</h4>
-                    <div></div>
-                    <h4>Options:</h4>
-                   <ul>
-                       <li>
-                            <h5>Required:</h5>
-                            <input type="checkbox" ng-model="date.isRequired">
-                            Turn on/off - if field is required
-                       </li>
-                       <li>
-                            <h5>checkfuturedate:</h5>
-                            <input type="checkbox" ng-model="date.ischeckfuturedate">
-                            Turn on/off - if date is future
-                       </li>
-                       <li>
-                            <h5>Fifteen Years:</h5>
-                            <input type="checkbox" ng-model="date.isfifteenyearsvalidation">
-                            Turn on/off - if date is more than fifteen years.
-                       </li>
-                   </div>
+
+            <div class="row">
+                <button class="btn btn-primary" name="Date" required type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="well well-sm">
+        <form name="formPhone" class="container">
+            <h4 class="row">
+                Phone:
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-show="formPhone.$submitted  || formPhone.Phone.$touched">
+                        <div ng-show="formPhone.Phone.$error.required" class="well well-sm cec-message-error">
+                            Phone is required.
+                        </div>
+                        <div ng-show="formPhone.Phone.$error.other" class="well well-sm cec-message-error">
+                            {{formPhone.Phone.$error.other}}
+                        </div>
+                        <div ng-show="formPhone.Phone.$error.fifteenyearsvalidationMessage" class="well well-sm cec-message-error">
+                            fifteen years validation Message.
+                        </div>
+                        <div ng-show="formPhone.Phone.$error.futuredateValidation" class="well well-sm cec-message-error">
+                            future date Validation Message - Your birthday cannot be in future.
+                        </div>
+                        <div ng-repeat="error in formPhone.Phone.$error.errorMessages" class="well well-sm cec-message-error">
+                            {{error}}
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="col-md-8">
+                            <phone-input ng-model="phone.data" name="Phone" ng-required="phone.isRequired"></phone-input>
+                        </div>
+                    </div>
                 </div>
-             </div>
-        </div>
-
-
-        <div class="row">
-            <button class="btn btn-primary" name="Date" required type="submit">Submit</button>
-        </div>
-
-    </form>
-    checkfuturedate="true" name="dateOfBirth" required class="" fifteenyearsvalidation="true"
+                 <div class="col-md-6">
+                    <div class="well">
+                        <h4>Description:</h4>
+                        <div>UI controll for user phone input...</div>
+                        <h4>Options:</h4>
+                        <ul>
+                            <li>
+                                <h5>Required:</h5>
+                                <input type="checkbox" ng-model="phone.isRequired"> Turn on/off - if field is required
+                            </li>
+                            
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" name="Date" required type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

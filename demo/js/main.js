@@ -5,5 +5,9 @@ angular.module('app', ['ui.controls']).
             isRequired:true,
             ischeckfuturedate:true,
             isfifteenyearsvalidation:true
+        };
+        $scope.phone={
+            data:null,
+            isRequired:true,
         }
     });

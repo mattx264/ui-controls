@@ -2,7 +2,8 @@ var gulp = require('gulp'),
   concat = require('gulp-concat'),
   uglify = require('gulp-uglify'),
   insert = require('gulp-insert'),
-  templateCache = require('gulp-angular-templatecache');
+  templateCache = require('gulp-angular-templatecache'),
+  sass = require('gulp-sass');
 
 var src='./src/**/*.js',
     dest='./dist/'
@@ -25,4 +26,16 @@ gulp.task('default', function () {
      gulp.src(dest+'*.js')
      .pipe(gulp.dest('./demo/js'));
      
+});
+gulp.task('sass', function () {
+   gulp.src(dest+'*.css')
+     .pipe(gulp.dest('./demo/css'))
+  return gulp.src('./src/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+      .pipe(concat('style.css'))
+    .pipe(gulp.dest('./dist/'));
+});
+ 
+gulp.task('sass:watch', function () {
+  gulp.watch('./src/**/*.scss', ['sass']);
 });

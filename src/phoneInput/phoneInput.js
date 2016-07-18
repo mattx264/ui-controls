@@ -5,7 +5,7 @@
             restrict: 'E',
             replace: true,
             require: 'ngModel',
-            scope: { ngModel: '=', 'ngDisabled': '=', 'isEwc': '=' },
+            scope: { ngModel: '=' },
             compile: function compile(tElement, tAttrs, transclude) {
                 return {
                     post: function postLink(scope, iElement, iAttrs, controller) {
@@ -44,9 +44,7 @@
                                 scope.phoneinput1 = text = scope.phoneinput1.toString().substring(0, 3);
                                 $("#" + scope.idOfElement + " .phoneinput2").select();
                             }
-                            if (scope.stringNumber[0] != text) {
-                                scope.isEwc.isEwc = false;
-                            }
+                           
                             scope.stringNumber[0] = text;
                             scope.updateModel();
                         }
@@ -66,9 +64,7 @@
                                 scope.phoneinput2 = text = scope.phoneinput2.toString().substring(0, 3);
                                 $("#" + scope.idOfElement + " .phoneinput3").select();
                             }
-                            if (scope.stringNumber[1] != text) {
-                                scope.isEwc.isEwc = false;
-                            }
+                            
                             scope.stringNumber[1] = text;
                             scope.updateModel();
                         }
@@ -86,9 +82,7 @@
                                 scope.stringNumber[2] = scope.phoneinput3.toString();
                             }
                            
-                            if (scope.stringNumber[2] != text) {
-                                scope.isEwc.isEwc = false;
-                            }
+                            
                             scope.stringNumber[2] = text;
                             scope.updateModel();
                             if (textLength == 4) {//revalid
