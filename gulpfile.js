@@ -28,8 +28,7 @@ gulp.task('default', function () {
      
 });
 gulp.task('sass', function () {
-   gulp.src(dest+'*.css')
-     .pipe(gulp.dest('./demo/css'))
+   gulp.src(dest+'*.css').pipe(gulp.dest('./demo/css'))
   return gulp.src('./src/**/*.scss')
     .pipe(sass().on('error', sass.logError))
       .pipe(concat('style.css'))

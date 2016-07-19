@@ -1,0 +1,31 @@
+
+.cec-message-error {
+    @include well-generator(#f2dede,#e79696,#a74545,#a74545);
+
+    .well-text {
+        padding-left: 24px;
+    };
+
+    margin-bottom: 5px !important;
+    font-size: 13px;
+    padding: 7px;
+}
+@mixin well-generator($background,$border-color,$font-color,$icon-color) {
+    background: $background;
+    border-color: $border-color;
+    color: $font-color;
+    td{
+          vertical-align:top;
+    }
+    .icon {
+        float: left;
+        height: 100%;
+        color: $icon-color;
+      
+    }
+
+    .well-text {
+        font-weight: bold;
+        color: $font-color;
+    }
+}

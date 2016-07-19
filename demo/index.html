@@ -82,22 +82,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div ng-show="formPhone.$submitted  || formPhone.Phone.$touched">
-                        <div ng-show="formPhone.Phone.$error.required" class="well well-sm cec-message-error">
+                        <error-message ng-show="formPhone.Phone.$error.required" >
                             Phone is required.
-                        </div>
-                        <div ng-show="formPhone.Phone.$error.other" class="well well-sm cec-message-error">
+                        </error-message>
+                        <error-message ng-show="formPhone.Phone.$error.invalid">
                             {{formPhone.Phone.$error.other}}
-                        </div>
-                        <div ng-show="formPhone.Phone.$error.fifteenyearsvalidationMessage" class="well well-sm cec-message-error">
-                            fifteen years validation Message.
-                        </div>
-                        <div ng-show="formPhone.Phone.$error.futuredateValidation" class="well well-sm cec-message-error">
-                            future date Validation Message - Your birthday cannot be in future.
-                        </div>
-                        <div ng-repeat="error in formPhone.Phone.$error.errorMessages" class="well well-sm cec-message-error">
-                            {{error}}
-                        </div>
-
+                        </error-message>
+                        
                     </div>
                     <div class="col">
                         <div class="col-md-8">
