@@ -28,6 +28,25 @@
   .ui-date-input input[type=number] {
     -moz-appearance: textfield; }
 
+.ui-message-error {
+  background: #f2dede;
+  border-color: #e79696;
+  color: #a74545;
+  margin-bottom: 5px !important;
+  font-size: 13px;
+  padding: 7px; }
+  .ui-message-error td {
+    vertical-align: top; }
+  .ui-message-error .glyphicon {
+    float: left;
+    height: 100%;
+    color: #a74545; }
+  .ui-message-error .well-text {
+    font-weight: bold;
+    color: #a74545; }
+  .ui-message-error .well-text {
+    padding-left: 24px; }
+
 .ui-phone-input {
   border: 1px solid #c9c9c9;
   border-radius: 7px;

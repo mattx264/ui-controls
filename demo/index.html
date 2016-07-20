@@ -21,21 +21,21 @@
             <div class="row">
                 <div class="col-md-6">
                     <div ng-show="form.$submitted  || form.Date.$touched">
-                        <div ng-show="form.Date.$error.required" class="well well-sm cec-message-error">
+                        <error-message ng-show="form.Date.$error.required" >
                             Date is required.
-                        </div>
-                        <div ng-show="form.Date.$error.other" class="well well-sm cec-message-error">
+                        </error-message>
+                        <error-message ng-show="form.Date.$error.other" >
                             {{form.Date.$error.other}}
-                        </div>
-                        <div ng-show="form.Date.$error.fifteenyearsvalidationMessage" class="well well-sm cec-message-error">
+                        </error-message>
+                        <error-message ng-show="form.Date.$error.fifteenyearsvalidationMessage" >
                             fifteen years validation Message.
-                        </div>
-                        <div ng-show="form.Date.$error.futuredateValidation" class="well well-sm cec-message-error">
+                        </error-message>
+                        <error-message ng-show="form.Date.$error.futuredateValidation">
                             future date Validation Message - Your birthday cannot be in future.
-                        </div>
-                        <div ng-repeat="error in form.Date.$error.errorMessages" class="well well-sm cec-message-error">
+                        </error-message>
+                        <error-message ng-repeat="error in form.Date.$error.errorMessages">
                             {{error}}
-                        </div>
+                        </error-message>
 
                     </div>
                     <div class="col">
