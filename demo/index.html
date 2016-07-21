@@ -20,30 +20,31 @@
             </h4>
             <div class="row">
                 <div class="col-md-6">
-                    <div ng-show="form.$submitted  || form.Date.$touched">
-                        <error-message ng-show="form.Date.$error.required" >
-                            Date is required.
-                        </error-message>
-                        <error-message ng-show="form.Date.$error.other" >
-                            {{form.Date.$error.other}}
-                        </error-message>
-                        <error-message ng-show="form.Date.$error.fifteenyearsvalidationMessage" >
-                            fifteen years validation Message.
-                        </error-message>
-                        <error-message ng-show="form.Date.$error.futuredateValidation">
-                            future date Validation Message - Your birthday cannot be in future.
-                        </error-message>
-                        <error-message ng-repeat="error in form.Date.$error.errorMessages">
-                            {{error}}
-                        </error-message>
+                    <div class="col-md-8">
+                        <div ng-show="form.$submitted  || form.Date.$touched">
+                            <error-message ng-show="form.Date.$error.required">
+                                Date is required.
+                            </error-message>
+                            <error-message ng-show="form.Date.$error.other">
+                                {{form.Date.$error.other}}
+                            </error-message>
+                            <error-message ng-show="form.Date.$error.fifteenyearsvalidationMessage">
+                                fifteen years validation Message.
+                            </error-message>
+                            <error-message ng-show="form.Date.$error.futuredateValidation">
+                                future date Validation Message - Your birthday cannot be in future.
+                            </error-message>
+                            <error-message ng-repeat="error in form.Date.$error.errorMessages">
+                                {{error}}
+                            </error-message>
 
-                    </div>
-                    <div class="col">
-                        <div class="col-md-8">
-                            <date-input ng-model="date.data" name="Date" checkfuturedate="{{date.ischeckfuturedate}}" fifteenyearsvalidation="{{date.isfifteenyearsvalidation}}"
-                                ng-required="date.isRequired"></date-input>
                         </div>
                     </div>
+                    <div class="col-md-8">
+                        <date-input ng-model="date.data" name="Date" checkfuturedate="{{date.ischeckfuturedate}}" fifteenyearsvalidation="{{date.isfifteenyearsvalidation}}"
+                            ng-required="date.isRequired"></date-input>
+                    </div>
+
                 </div>
                 <div class="col-md-6">
                     <div class="well">
@@ -81,22 +82,22 @@
             </h4>
             <div class="row">
                 <div class="col-md-6">
-                    <div ng-show="formPhone.$submitted  || formPhone.Phone.$touched">
-                        <error-message ng-show="formPhone.Phone.$error.required" >
-                            Phone is required.
-                        </error-message>
-                        <error-message ng-show="formPhone.Phone.$error.invalid">
-                            {{formPhone.Phone.$error.other}}
-                        </error-message>
-                        
-                    </div>
-                    <div class="col">
-                        <div class="col-md-8">
-                            <phone-input ng-model="phone.data" name="Phone" ng-required="phone.isRequired"></phone-input>
+                    <div class="col-md-8">
+                        <div ng-show="formPhone.$submitted  || formPhone.Phone.$touched">
+                            <error-message ng-show="formPhone.Phone.$error.required">
+                                Phone is required.
+                            </error-message>
+                            <error-message ng-show="formPhone.Phone.$error.invalid">
+                                {{formPhone.Phone.$error.other}}
+                            </error-message>
+
                         </div>
                     </div>
+                    <div class="col-md-8">
+                        <phone-input ng-model="phone.data" name="Phone" ng-required="phone.isRequired"></phone-input>
+                    </div>
                 </div>
-                 <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="well">
                         <h4>Description:</h4>
                         <div>UI controll for user phone input...</div>
@@ -106,13 +107,57 @@
                                 <h5>Required:</h5>
                                 <input type="checkbox" ng-model="phone.isRequired"> Turn on/off - if field is required
                             </li>
-                            
+
                     </div>
                 </div>
             </div>
             <div class="row">
                 <button class="btn btn-primary" name="Date" required type="submit">Submit</button>
             </div>
+        </form>
+    </div>
+      <div class="well well-sm">
+        <form name="formPhone" class="container">
+            <h4 class="row">
+                Show Password:
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-8">
+                        <div ng-show="formPhone.$submitted  || formPhone.Phone.$touched">
+                            <error-message ng-show="formPhone.Phone.$error.required">
+                                Phone is required.
+                            </error-message>
+                            <error-message ng-show="formPhone.Phone.$error.invalid">
+                                {{formPhone.Phone.$error.other}}
+                            </error-message>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <input type="password" class="form-control"  id="mypassword">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Show Password
+                                  <input type="checkbox"  show-password passwordid="mypassword">
+                            </div>
+                        </div>
+                      
+                      
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <h4>Description:</h4>
+                        <div>Form controll for show/hide password.</div>
+                    </div>
+                </div>
+            </div>
+           
         </form>
     </div>
 </body>

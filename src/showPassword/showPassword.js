@@ -8,12 +8,12 @@
                 var passwordVisible = false;
                 element.bind('click', function() {
                     if (passwordVisible == false) {
-                        $('#' + attrs.cecpasswordid).removeAttr('type');
-                        $('#' + attrs.cecpasswordid).prop('type', 'text');
+                        $('#' + attrs.passwordid).removeAttr('type');
+                        $('#' + attrs.passwordid).prop('type', 'text');
                         passwordVisible = true;
                     } else {
-                        $('#' + attrs.cecpasswordid).removeAttr('type');
-                        $('#' + attrs.cecpasswordid).prop('type', 'password');
+                        $('#' + attrs.passwordid).removeAttr('type');
+                        $('#' + attrs.passwordid).prop('type', 'password');
                         passwordVisible = false;
                     }
                 });

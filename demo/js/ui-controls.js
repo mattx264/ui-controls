@@ -253,17 +253,6 @@
     };
     angular.module('ui.controls').directive('dateInput', ['$timeout', dateInput]);
 })();
-(function(){
-    'use strict';
-    function errorMessage() {
-          return {
-            restrict: 'E',
-            transclude:true,
-            template: '<div class="well well-sm ui-message-error">  <span class=""></span><div class="well-text" ng-transclude></div></div>',
-        };
-    }
-    angular.module('ui.controls').directive('errorMessage', [errorMessage]);
-})();
 (function () {
     'use strict';
     function showPassword() {
@@ -274,12 +263,12 @@
                 var passwordVisible = false;
                 element.bind('click', function() {
                     if (passwordVisible == false) {
-                        $('#' + attrs.cecpasswordid).removeAttr('type');
-                        $('#' + attrs.cecpasswordid).prop('type', 'text');
+                        $('#' + attrs.passwordid).removeAttr('type');
+                        $('#' + attrs.passwordid).prop('type', 'text');
                         passwordVisible = true;
                     } else {
-                        $('#' + attrs.cecpasswordid).removeAttr('type');
-                        $('#' + attrs.cecpasswordid).prop('type', 'password');
+                        $('#' + attrs.passwordid).removeAttr('type');
+                        $('#' + attrs.passwordid).prop('type', 'password');
                         passwordVisible = false;
                     }
                 });
@@ -288,6 +277,17 @@
         }
     }
     angular.module('ui.controls').directive('showPassword', [showPassword]);
+})();
+(function(){
+    'use strict';
+    function errorMessage() {
+          return {
+            restrict: 'E',
+            transclude:true,
+            template: '<div class="well well-sm ui-message-error">  <span class=""></span><div class="well-text" ng-transclude></div></div>',
+        };
+    }
+    angular.module('ui.controls').directive('errorMessage', [errorMessage]);
 })();
 (function () {
     'use strict';
