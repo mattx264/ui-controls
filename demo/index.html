@@ -116,7 +116,48 @@
             </div>
         </form>
     </div>
-      <div class="well well-sm">
+    <div class="well well-sm">
+        <form name="formSsn" class="container">
+            <h4 class="row">
+                Social Security Number:
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-8">
+                        <div ng-show="formSsn.$submitted  || formSsn.Ssn.$touched">
+                            <error-message ng-show="formSsn.Ssn.$error.required">
+                                Social Security Number is required.
+                            </error-message>
+                            <error-message ng-show="formSsn.Ssn.$error.invalid">
+                                {{formSsn.Ssn.$error.other}}
+                            </error-message>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <ssn-input ng-model="ssn.data" name="Ssn" ng-required="ssn.isRequired"></ssn-input>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <h4>Description:</h4>
+                        <div>UI controll for user ssn input...</div>
+                        <h4>Options:</h4>
+                        <ul>
+                            <li>
+                                <h5>Required:</h5>
+                                <input type="checkbox" ng-model="ssn.isRequired"> Turn on/off - if field is required
+                            </li>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" name="Date" required type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="well well-sm">
         <form name="formPhone" class="container">
             <h4 class="row">
                 Show Password:
@@ -137,17 +178,17 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-12">
-                                  <input type="password" class="form-control"  id="mypassword">
+                                <input type="password" class="form-control" id="mypassword">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 Show Password
-                                  <input type="checkbox"  show-password passwordid="mypassword">
+                                <input type="checkbox" show-password passwordid="mypassword">
                             </div>
                         </div>
-                      
-                      
+
+
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -157,7 +198,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </form>
     </div>
 </body>

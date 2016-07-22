@@ -73,3 +73,30 @@
     margin: 0; }
   .ui-phone-input input[type=number] {
     -moz-appearance: textfield; }
+
+.ui-ssn-input {
+  border: 1px solid #c9c9c9;
+  border-radius: 7px;
+  background-color: white;
+  display: table;
+  content: ''; }
+  @media (max-width: 768px) {
+    .ui-ssn-input {
+      padding: 6px 4px 3px 4px !important; } }
+  @media (min-width: 767px) {
+    .ui-ssn-input {
+      padding: 3px 4px 3px 4px !important; } }
+  .ui-ssn-input input {
+    border: none;
+    padding: 0 2px 0 2px;
+    text-align: center;
+    background-color: transparent; }
+  .ui-ssn-input input:focus {
+    outline: none;
+    padding: 0; }
+  .ui-ssn-input input[type=number]::-webkit-inner-spin-button,
+  .ui-ssn-input input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; }
+  .ui-ssn-input input[type=number] {
+    -moz-appearance: textfield; }

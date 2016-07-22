@@ -10,4 +10,8 @@ angular.module('app', ['ui.controls']).
             data:null,
             isRequired:true,
         }
+           $scope.ssn={
+            data:null,
+            isRequired:true,
+        }
     });
