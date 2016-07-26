@@ -1,0 +1,29 @@
+﻿<div class="ui-dropdown-list">
+    <header class="row">
+        <div ng-click="back()" class="col-xs-6 text-left padding-left-30">< Back</div>
+        <div ng-click="done()" class="col-xs-6 text-right padding-right-30">Done</div>
+    </header>
+    <div class="row item-wraper">
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+                <cec-error-message ng-if="showErrorMessage">Program is required.</cec-error-message>
+            </div>
+       
+
+            <div ng-click="changeSelect(item.viewValue)" class="item" ng-repeat="item in selectList.items">
+                <span>
+                    <input ng-model="selectList.selected" value="{{item.viewValue}}" type="radio" />
+                </span>
+                <span>
+                    {{item.label}}
+                </span>
+
+            </div>
+            <div class="empty-item">
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
