@@ -250,10 +250,10 @@
 
 
 
-    angular.module('cecApplication')
-        .directive('cecMobileDropdown', ['$compile', '$document', '$parse', '$window', cecMobileDropDown]);
+    angular.module('ui.controls')
+        .directive('mobileDropdown', ['$compile', '$document', '$parse', '$window', mobileDropdown]);
 
-    function cecMobileList($document) {
+    function mobileDropdownList($document) {
         return {
             templateUrl: "Angular/Directive/cec-mobile-dropdown-template.html",
             link: function (scope, element, attr, ctrls) {
@@ -284,7 +284,7 @@
         }
     }
     angular.module('ui.controls')
-       .directive('mobileDropdown', ['$document', mobileDropdown]);
+       .directive('mobileDropdownList', ['$document', mobileDropdownList]);
 })();
 
 

@@ -1,37 +1,74 @@
 @import '../global';
-.ui-phone-input {
-    @include border-common;
-    @media (max-width:768px) {
-        padding: 6px 4px 3px 4px !important;
-    }
+.select-mobile-mask {
+    height: 35px;
+    position: absolute;
+    z-index: 12;
+    opacity: .5;
+    right: 15px;
+    left: 15px;
+    background-color: transparent;
+}
 
-    @media (min-width: 767px) {
-        padding: 3px 4px 3px 4px !important;
-    }
-    //max-width: 144px;
-    background-color: white;
-    display: table;
-    content: '';
+.ui-mobile-list-animation {
+    height: 100% !important;
+    transition: height 5s ease-in;
+    overflow: hidden;
+}
 
-    input {
-        border: none;
-        padding: 0 2px 0 2px;
-        text-align: center;
-        background-color: transparent;
-    }
+.ui-mobile-list {
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    background: white;
+    top: 0;
+    left: 0;
+    z-index: 172;
+    -webkit-overflow-scrolling: touch;
+    transition: height .5s ease-in;
 
-    input:focus {
-        outline: none;
-        padding: 0;
-    }
+    .mobile-dropdown-list {
+        height: 100%;
 
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+        header {
+            color: white;
+            height: 48px;
+            font-size: 13px;
 
-    input[type=number] {
-        -moz-appearance: textfield;
+            div {
+                height: 100%;
+                display: -ms-flex;
+                display: -webkit-flex;
+                display: flex;
+                align-items: center;
+            }
+            div:last-child{
+                justify-content: flex-end;
+            }
+        }
+
+        .item-wraper {
+            overflow: scroll;
+            height: 100%;
+
+            .item {
+                height: 48px;
+                font-size: 13px;
+                border-bottom: 1px solid @cec-body-background-color;
+                display: -ms-flex;
+                display: -webkit-flex;
+                display: flex;
+                align-items: center;
+                -webkit-align-items: center;
+                padding-left: 7px;
+            }
+
+            .empty-item {
+                height: 75px;
+            }
+        }
+
+        input {
+            margin-right: 7px;
+        }
     }
 }

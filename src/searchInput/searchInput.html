@@ -1,0 +1,54 @@
+﻿<div class="cec-search-component">
+    <div ng-click="showAllData()" class="cec-search-btn brand-primary-background">
+        <span class="icon icon-search"></span>
+        <span class="search-label">Search</span>
+    </div>
+    <div class="main-part">
+
+        <div class="  cec-search-input-wraper">
+            <div class=" cec-search-input">
+                <span class="icon icon-x" ng-click="clearSearchField()"></span>
+                <div class="input-text">
+                    <input ng-model="searchText" placeholder="{{placeholder}}" type="text" ng-model-options="{debounce: { 'default': 500, 'blur': 0 }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="result" ng-show="resultView">
+        <div class="result-header" ng-hide="dataList.length==0">
+            <small ng-if="dataList.length< 8">Showing 1-{{dataList.length}} of {{dataList.length}} Results</small>
+            <small ng-if="dataList.length>= 8">Showing 1-8 of {{dataList.length}} Results</small>
+        </div>
+        <div class="result-list">
+            <div ng-click="selectItem(item.id)" class="list-item" title="Select" ng-repeat="item in dataList  | limitTo :8 ">
+
+                <cec-highlight-text ng-bind="item[display.main]" search-text="searchText"></cec-highlight-text>
+                <div>
+                    <small>
+                        <span ng-repeat="dis in display.list">
+                            <cec-highlight-text ng-bind="item[dis]" search-text="searchText"></cec-highlight-text><span ng-show="dis=='schoolCity'">,</span>
+                        </span>
+                        <!--<span><cec-highlight-text ng-bind="item.schoolStateCode" search-text="searchText"></cec-highlight-text>, </span>.schoolCity
+                        <span><cec-highlight-text ng-bind="item.schoolZip" search-text="searchText"></cec-highlight-text></span>.-->
+
+                    </small>
+                </div>
+                <span class="pull-right icon icon-nav-arrow"></span>
+            </div>
+        </div>
+        <div class="result-footer">
+            <div ng-show="dataList.length <= 8 && dataList.length>0">
+                <div>All results containing "{{searchText}}" are listed above.</div>
+                <div ng-hide="hideaddmanually">If you don't see your institution, try again or <a class="bold" ng-click="addManually()">Add Your Institution Manually</a></div>
+            </div>
+            <div ng-show="dataList.length > 8 ">
+                <a ng-click="showAllData()"><small></small>Show all {{dataList.length}} results containing "{{searchText}}"</a>
+            </div>
+            <div ng-show="dataList.length == 0 " class="margin-top-15 margin-bottom-15">
+          
+                No results match "{{searchText}}". Please try searching again<span ng-hide="hideaddmanually"> or <a class="bold" ng-click="addmanually()">Add Your Institution Manually</a></span>.
+            </div>
+        </div>
+    </div>
+
+</div>
