@@ -199,7 +199,7 @@
                         var listScope = scope.$new();
                         listScope.selectList = ngOptions.getOptions();
                         listScope.selectList.selected = selectCtrl.readValue();
-                        $document.find('body').eq(0).append($compile("<cec-mobile-list class='cec-mobile-list'></cec-mobile-list>")(listScope));
+                        $document.find('body').eq(0).append($compile("<mobile-dropdown-list class='mobile-list'></mobile-dropdown-list>")(listScope));
                         listScope.$on('$destroy', function(event) {
                             if (scope.nextSelected !== null) {
                                 ngModelCtrl.$setViewValue(scope.nextSelected);
@@ -255,9 +255,9 @@
 
     function mobileDropdownList($document) {
         return {
-            templateUrl: "Angular/Directive/cec-mobile-dropdown-template.html",
+            templateUrl: "src/mobileDropdown/mobileDropdown.html",
             link: function (scope, element, attr, ctrls) {
-                element.addClass('cec-mobile-list-animation');
+                element.addClass('mobile-list-animation');
                 $document.find('body').eq(0).addClass('modal-open');
 
                 scope.back = function () {
