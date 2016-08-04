@@ -1,0 +1,108 @@
+﻿<div class="ui-grid">
+
+    <div class="count-header">
+        <span class="showing-text" >
+            <span>Showing {{numberItemStart + 1 }}-{{numberItemEnd}} of {{dataList.length}} Results for <i>"{{searchText}}"</i></span>
+        </span>
+    </div>
+    <div class="hidden-xs page-number-contener">
+        <span ng-show="dataList.length>10" class="show-number pull-right">
+            Show:
+            <a ng-click="setNumberOfItemOnPage(10)" ng-class="{'link-selected' :  numberOfItemOnPage == 10 }">10</a>
+            <a ng-click="setNumberOfItemOnPage(20)" ng-show="dataList.length>20" ng-class="{'link-selected' :  numberOfItemOnPage == 20 }">20</a>
+            <a ng-click="setNumberOfItemOnPage('all')" ng-class="{'link-selected' :  numberOfItemOnPage == 'all' }" ng-hide="dataList.length>100">All</a>
+        </span>
+    </div>
+    <div class="visible-xs page-number-contener-xs" ng-hide="dataList.length==0">
+        <span ng-show="dataList.length>10" class="show-number pull-right">
+            <span>Show:</span>
+            <div class="inline">
+                <a ng-click="setNumberOfItemOnPage(10)" ng-class="{'link-selected' :  numberOfItemOnPage == 10 }">10</a>
+                <a ng-click="setNumberOfItemOnPage(20)" ng-show="dataList.length>20" ng-class="{'link-selected' :  numberOfItemOnPage == 20 }">20</a>
+                <a ng-click="setNumberOfItemOnPage('all')" ng-class="{'link-selected' :  numberOfItemOnPage == 'all' }" ng-hide="dataList.length>100">All</a>
+            </div>
+        </span>
+    </div>
+    <table class="table hidden-xs">
+        <thead>
+            <tr>
+                <th ng-repeat="head in gridSetup.col" ng-click="clickHeader($event,head)" class="grid-col-header un-active-col-header">
+                    {{head.colName}}<span ng-class="{'hide':head.selected==false}" class="icon icon icon-expand-collapse"></span>
+                </th>
+                <th class="grid-col-header un-active-col-header">Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in dataList | orderBy:sortBy  | limitTo: numberOfItemOnPage : numberItemStart " class="grid-row">
+                <th ng-repeat="col in gridSetup.col">
+                    <span ng-if="col.dataName!=null"><highlight-text ng-bind="row[gridSetup.col[$index].dataName]" search-text="searchText"></highlight-text></span>
+                    <span ng-if="col.dataName==null" ng-bind-html="col.template | unsafe"></span>
+                </th>
+                <th>
+                    <div class="table-btn brand-primary-background" ng-click="selectItem(row['id'])">Select</div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+ 
+    <div class="hidden-xs text-center footer page-number-contener" ng-hide="dataList.length==0">
+
+        <div class="inline pagging">
+            <span ng-click="prePage()" ng-class="{'link-disabled' : firstPage }" class="brand-secondary-color">< </span>
+            <a ng-click="prePage()" class="first-child" ng-class="{'link-disabled' :firstPage }">Previous</a>
+            <a ng-click="setPage(page.number)" ng-class="{'link-selected' : page.isSelected == true }" ng-repeat="page in pageList | limitTo  :8 : limitBegin ">{{page.number}}</a>
+            <a ng-click="nextPage()" class="last-child" ng-class="{'link-disabled' : lastPage }">Next</a>
+            <span ng-click="nextPage()" ng-class="{'link-disabled' : lastPage }" class="brand-secondary-color"> ></span>
+
+        </div>
+        <span ng-show="dataList.length>10" class="show-number inline pull-right hidden-xs">
+            Show:
+            <a ng-click="setNumberOfItemOnPage(10)" ng-class="{'link-selected' :  numberOfItemOnPage == 10 }">10</a>
+            <a ng-click="setNumberOfItemOnPage(20)" ng-show="dataList.length>20" ng-class="{'link-selected' :  numberOfItemOnPage == 20 }">20</a>
+            <a ng-click="setNumberOfItemOnPage('all')" ng-class="{'link-selected' :  numberOfItemOnPage == 'all' }" ng-hide="dataList.length>100">All</a>
+        </span>
+    </div>
+    <div class="visible-xs">
+      
+        <div ng-repeat="row in dataList | orderBy:sortBy  | limitTo: numberOfItemOnPage : numberItemStart " class="xs-grid-row" ng-click="selectItem(row.id)">
+            <div class="">
+                <highlight-text ng-bind="row[gridSetup.col[0].dataName]" search-text="searchText"></highlight-text>
+            </div>
+            <small ng-repeat="col in gridSetup.col |limitTo: 1000 :1">
+                <highlight-text ng-bind="row[gridSetup.col[$index].dataName]" search-text="searchText"></highlight-text>
+            </small>
+
+        </div>
+    </div>
+    <div ng-show="dataList.length==0 " class="no-result text-center">
+        No results match "{{searchText}}".<span ng-hide="hideaddmanually"> Please try searching again or <a ng-click="addmanually()">Add Your Institution Manually</a>.</span>
+    </div>
+    <div ng-click="selectItem(item.id)" class="list-item visible-xs" title="Select This Institution" ng-repeat="item in dataList | orderBy:sortBy  | limitTo: numberOfItemOnPage : numberItemStart ">
+
+        <highlight-text ng-bind="item[ridSetup.col[0]]" search-text="searchText"></highlight-text>
+        <div>
+            <small>
+                <span ng-repeat="dis in gridSetup.col | limitTo: 100:1">
+                    <highlight-text ng-bind="item[dis]" search-text="searchText"></highlight-text>
+                </span>
+               
+            </small>
+        </div>
+       
+    </div>
+    <div class="text-center xs-footer visible-xs " ng-hide="dataList.length==0" ng-show="dataList.length<10">
+        <div class="inline  pull-left ">
+            <a ng-click="prePage()" class="first-child" ng-class="{'invisible':firstPage==true }">< Previous</a>
+        </div>
+        <div class="inline col-xs-4 text-center">
+            <span>
+                Page {{currentPageSelected}}
+            </span>
+        </div>
+        <div class="inline  pull-right ">
+            <a ng-click="nextPage()" class="last-child" ng-hide="lastPage">Next ></a>
+
+        </div>
+
+    </div>
+</div>
