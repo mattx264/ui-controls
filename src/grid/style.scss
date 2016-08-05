@@ -1,0 +1,207 @@
+@import '../global';
+
+.ui-grid {
+    margin-top: 15px;
+
+    .no-result {
+        background-color: white;
+        padding: 15px;
+    }
+
+    .page-number-contener {
+        .show-number {
+            a {
+                margin-left: 10px;
+                cursor: pointer;
+
+                @media(max-width:767px) {
+                    @include border-common;
+                    padding: 10px;
+                }
+            }
+        }
+    }
+
+    .page-number-contener-xs {
+        height: 30px;
+        margin: 5px 0 10px;
+
+        .show-number {
+            a {
+                padding: 10px;
+                @include border-common;
+                display: inline-block;
+                width: 40px;
+                height: 37px;
+                margin-left: -5px;
+                text-align: center;
+                vertical-align: super;
+                background-color: white;
+            }
+
+            a:first-child {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+
+            a:last-child {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+
+            span {
+                display: inline-block;
+                vertical-align: super;
+                height: 35px;
+                width: 40px;
+            }
+        }
+    }
+
+    .count-header {
+        @media(min-width:768px) {
+            float: left;
+        }
+
+        .showing-text {
+            /*css in camupus generator*/
+        }
+    }
+
+    .link-selected {
+        color: inherit;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .link-disabled {
+        color: $text-disabled-color !important;
+        text-decoration: none;
+    }
+
+    .link-disabled:hover, .link-disabled:active, .link-disabled:focus {
+        color: $text-disabled-color !important;
+    }
+
+    .grid-col-header {
+        .icon {
+            float: right;
+            font-size: 13px;
+            height: 10px;
+            margin-top: 1px;
+        }
+    }
+
+    .un-active-col-header {
+    }
+
+    .grid-row {
+    }
+
+    .xs-grid-row {
+        /*height: 43px;*/
+        background-color: #fff;
+         @include border-common;
+        -moz-box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.25) !important;
+        -webkit-box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.25) !important;
+        box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.25) !important;
+        margin-bottom: 8px;
+        padding: 5px 5px 5px 5px;
+
+        div {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            position: relative;
+            color: #c9c9c9;
+            font-size: 15px;
+            margin-top: 0;
+            top: -23px;
+            margin-right: -3px;
+        }
+    }
+
+    .footer {
+        .pagging {
+            span {
+                cursor: pointer;
+            }
+
+            a {
+                margin-left: 20px;
+            }
+
+            a.first-child {
+                margin-right: 10px;
+                margin-left: 0 !important;
+            }
+
+            a.last-child {
+                margin-right: 0 !important;
+                margin-left: 30px;
+            }
+        }
+    }
+
+    .xs-footer {
+        margin-top: 15px;
+
+        a {
+            border: 1px solid #e4e4e4;
+            background-color: white;
+            padding: 7px 0 8px 0;
+            margin-top: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 85px;
+        }
+
+        span {
+            padding: 13px 0 8px 0;
+            display: inline-block;
+        }
+    }
+
+    .table {
+        margin-bottom: 0 !important;
+       @include border-common;
+
+        thead {
+
+            th {
+                color: white;
+                padding: 5px;
+            }
+
+            th:last-child {
+                min-width: 55px;
+                max-width: 300px;
+            }
+        }
+
+        tbody {
+            font-size: 13px;
+
+            th:last-child {
+                min-width: 55px;
+                max-width: 300px;
+            }
+
+            th {
+                border-top: 1px solid $lighter-border-color !important;
+                font-weight: normal;
+                padding: 3px;
+                vertical-align: central !important;
+            }
+
+            tr:nth-of-type(odd) {
+                background-color: $body-background-color;
+            }
+        }
+    }
+}

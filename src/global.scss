@@ -1,3 +1,12 @@
+ 
+$text-disabled-color:	#767676;
+$text-placeholder-color:#999;
+$gray-icons-e-color:#464646;
+$gray-icons-d-color:#9d9d9d;
+$main-border-local-color:#c9c9c9;
+$lighter-border-color:#e4e4e4;
+$darker-border-color:#9d9d9d;
+$body-background-color:#eee;
   @mixin border-common{
       border: 1px solid #c9c9c9;
       border-radius: 7px;
