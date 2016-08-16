@@ -201,6 +201,58 @@
 
         </form>
     </div>
+    <div class="well well-sm">
+        <form name="mobileDropdown" class="container">
+            <h4 class="row">
+                Mobile Drop down:
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-8">
+                        <div ng-show="mobileDropdown.$submitted  || mobileDropdown.Phone.$touched">
+                            <!--<error-message ng-show="mobileDropdown.Phone.$error.required">
+                                Phone is required.
+                            </error-message>
+                            <error-message ng-show="formPhone.Phone.$error.invalid">
+                                {{mobileDropdown.Phone.$error.other}}
+                            </error-message>-->
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="password" class="form-control" id="mypassword">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Select Country:
+                                <select>
+                                    <option>
+                                        USA
+                                    </option>
+                                    <option>
+                                        Poland
+                                    </option>
+                                      <option>
+                                        Hungery
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <h4>Description:</h4>
+                        <div>Form controll for show/hide password.</div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
 </body>
 
 </html>
