@@ -68,8 +68,6 @@
                 locals[valueName] = value;
                 return locals;
             };
-
-
             function Option(selectValue, viewValue, label, group, disabled) {
                 this.selectValue = selectValue;
                 this.viewValue = viewValue;
@@ -81,7 +79,7 @@
             function getOptionValuesKeys(optionValues) {
                 var optionValuesKeys;
 
-                if (!keyName && isArray(optionValues)) {
+                if (!keyName && Array.isArray(optionValues)) {
                     optionValuesKeys = optionValues;
                 } else {
                     // if object, extract keys, in enumeration order, unsorted
@@ -199,7 +197,7 @@
                         var listScope = scope.$new();
                         listScope.selectList = ngOptions.getOptions();
                         listScope.selectList.selected = selectCtrl.readValue();
-                        $document.find('body').eq(0).append($compile("<mobile-dropdown-list class='mobile-list'></mobile-dropdown-list>")(listScope));
+                        $document.find('body').eq(0).append($compile("<mobile-dropdown-list class='ui-mobile-list'></mobile-dropdown-list>")(listScope));
                         listScope.$on('$destroy', function(event) {
                             if (scope.nextSelected !== null) {
                                 ngModelCtrl.$setViewValue(scope.nextSelected);
@@ -257,7 +255,7 @@
         return {
             templateUrl: "src/mobileDropdown/mobileDropdown.html",
             link: function (scope, element, attr, ctrls) {
-                element.addClass('mobile-list-animation');
+                element.addClass('ui-mobile-list-animation');
                 $document.find('body').eq(0).addClass('modal-open');
 
                 scope.back = function () {

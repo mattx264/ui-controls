@@ -6,16 +6,19 @@ var gulp = require('gulp'),
   sass = require('gulp-sass');
 
 var src = './src/**/*.js',
-  dest = './dist/'
+    srcList=['./src/dateInput/dateInput.js','./src/grid/grid.js','./src/highlightText/highlightText.js',
+            './src/message/errorMessage.js','./src/phoneInput/phoneInput.js','./src/searchInput/searchInput.js',
+            './src/showPassword/showPassword.js','./src/ssnInput/ssnInput.js'],
+    dest = './dist/';
 
 
-gulp.task('min', function () {
-  gulp.src(src)
-    .pipe(concat('ui-controls.min.js'))
+
+gulp.task('jsConcat', function () {
+  gulp.src(srcList)
+    .pipe(concat('ui-controls.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(dest));
-
-})
+   .pipe(gulp.dest(dest));
+});
 gulp.task('default', function () {
   gulp.src('./src/**/*.html')
     .pipe(templateCache('templates.js', { 'root': 'src', 'module': "ui.controls" }))

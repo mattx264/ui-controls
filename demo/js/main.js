@@ -14,4 +14,9 @@ angular.module('app', ['ui.controls']).
             data: null,
             isRequired: true,
         };
+
+         $scope.mobileDDL = {
+            id: 1,
+            countries:[{id:1,name:'USA'},{id:2,name:'Poland'},{id:3,name:'Hungery'}]
+        };
     });

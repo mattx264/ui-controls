@@ -26,11 +26,11 @@
     -webkit-overflow-scrolling: touch;
     transition: height .5s ease-in;
 
-    .mobile-dropdown-list {
+    .ui-dropdown-list {
         height: 100%;
 
         header {
-            color: white;
+            //color: white;
             height: 48px;
             font-size: 13px;
 
@@ -45,7 +45,6 @@
                 justify-content: flex-end;
             }
         }
-
         .item-wraper {
             overflow: scroll;
             height: 100%;
@@ -53,7 +52,7 @@
             .item {
                 height: 48px;
                 font-size: 13px;
-                border-bottom: 1px solid @cec-body-background-color;
+                border-bottom: 1px solid #eee;
                 display: -ms-flex;
                 display: -webkit-flex;
                 display: flex;

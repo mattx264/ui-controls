@@ -207,6 +207,11 @@
                 Mobile Drop down:
             </h4>
             <div class="row">
+                <div class="col-xs-12">
+                    <!--<span class="label label-warning">Warning: To see</span>-->
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="col-md-8">
                         <div ng-show="mobileDropdown.$submitted  || mobileDropdown.Phone.$touched">
@@ -215,22 +220,10 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" id="mypassword">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                Select Country:
-                                <select>
-                                    <option>
-                                        USA
-                                    </option>
-                                    <option>
-                                        Poland
-                                    </option>
-                                      <option>
-                                        Hungery
-                                    </option>
+                                Select Country:{{mobileDDL.id}}
+                                <select class="form-control col-xs-12"
+                                        mobile-dropdown ng-model="mobileDDL.id" 
+                                        ng-options="item.id as item.name for item in mobileDDL.countries">
                                 </select>
                             </div>
                         </div>

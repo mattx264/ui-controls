@@ -1,12 +1,12 @@
-﻿<div class="cec-search-component">
-    <div ng-click="showAllData()" class="cec-search-btn brand-primary-background">
+﻿<div class="search-component">
+    <div ng-click="showAllData()" class="search-btn brand-primary-background">
         <span class="icon icon-search"></span>
         <span class="search-label">Search</span>
     </div>
     <div class="main-part">
 
-        <div class="  cec-search-input-wraper">
-            <div class=" cec-search-input">
+        <div class="search-input-wraper">
+            <div class="search-input">
                 <span class="icon icon-x" ng-click="clearSearchField()"></span>
                 <div class="input-text">
                     <input ng-model="searchText" placeholder="{{placeholder}}" type="text" ng-model-options="{debounce: { 'default': 500, 'blur': 0 }}" />
@@ -22,15 +22,12 @@
         <div class="result-list">
             <div ng-click="selectItem(item.id)" class="list-item" title="Select" ng-repeat="item in dataList  | limitTo :8 ">
 
-                <cec-highlight-text ng-bind="item[display.main]" search-text="searchText"></cec-highlight-text>
+                <highlight-text ng-bind="item[display.main]" search-text="searchText"></highlight-text>
                 <div>
                     <small>
                         <span ng-repeat="dis in display.list">
-                            <cec-highlight-text ng-bind="item[dis]" search-text="searchText"></cec-highlight-text><span ng-show="dis=='schoolCity'">,</span>
+                            <highlight-text ng-bind="item[dis]" search-text="searchText"></highlight-text><span ng-show="dis=='schoolCity'">,</span>
                         </span>
-                        <!--<span><cec-highlight-text ng-bind="item.schoolStateCode" search-text="searchText"></cec-highlight-text>, </span>.schoolCity
-                        <span><cec-highlight-text ng-bind="item.schoolZip" search-text="searchText"></cec-highlight-text></span>.-->
-
                     </small>
                 </div>
                 <span class="pull-right icon icon-nav-arrow"></span>
