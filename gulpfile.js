@@ -19,6 +19,7 @@ gulp.task('jsConcat', function () {
     .pipe(uglify())
    .pipe(gulp.dest(dest));
 });
+/*Export templates  */
 gulp.task('default', function () {
   gulp.src('./src/**/*.html')
     .pipe(templateCache('templates.js', { 'root': 'src', 'module': "ui.controls" }))

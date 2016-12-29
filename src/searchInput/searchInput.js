@@ -3,7 +3,7 @@
     function searchInput($http, $filter, $rootScope, $window, $document) {
         return {
             restrict: "E",
-            templateUrl: 'sec/searchInput/searchInput.html',
+            templateUrl: 'src/searchInput/searchInput.html',
             scope: { 'selectedevent': "&", 'connectionEvent': '@', 'searchText': '=?', 'placeholder': '@', 'apiAddress': '@', 'display': "=", 'addmanually': '&', 'hideaddmanually': '@' },
             controller: ['$scope', function ($scope) {
                 $scope.selectItem = function (id) {

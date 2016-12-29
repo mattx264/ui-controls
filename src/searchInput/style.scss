@@ -1,1 +1,208 @@
 @import '../global';
+.search-component {
+    overflow: hidden;
+
+    .search-btn {
+        float: right;
+        cursor: pointer;
+        text-align: center;
+        color: white;
+        padding: 5px;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+
+        .search-label {
+            font-weight: bold;
+        }
+
+        .icon {
+            color: white;
+            font-size: 16px;
+            margin-right: 2px;
+            margin-left: 3px;
+        }
+    }
+
+    .main-part {
+        float: none;
+        width: auto;
+        overflow: hidden;
+        height: 32px;
+
+        .search-input-wraper {
+            width: 100%;
+            display: inline-block;
+            border: 1px solid $main-border-local-color;
+            border-right: none;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+            overflow: hidden;
+            padding: 4px;
+            background-color: white;
+
+            .search-input {
+                float: none;
+                width: auto;
+                overflow: hidden;
+
+                .icon {
+                    float: right;
+                    overflow: hidden;
+                    font-size: 12px;
+                    margin-top: 1px;
+                    color: $main-border-local-color;
+                    cursor: pointer;
+                }
+
+                .input-text {
+                    overflow: hidden;
+                    float: none;
+                    display: block;
+                    width: auto;
+
+                    input {
+                        width: 100%;
+                        border: none;
+                        outline: none;
+                    }
+
+                    input::-ms-clear {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width:768px) {
+        .search-btn {
+            width: 90px;
+        }
+    }
+
+    @media (max-width:767px) {
+        .search-btn {
+            width: 35px;
+
+            .search-label {
+                display: none;
+            }
+        }
+    }
+
+    @media (min-width:768px) {
+        .result {
+            position: absolute;
+            border: 1px solid $main-border-local-color;
+            @include box-shadow-common;
+            z-index: 10;
+            margin-bottom: 30px;
+
+            .result-header {
+                background-color: $main-border-local-color;
+                text-align: center;
+            }
+
+            .result-list {
+                background-color: white;
+                cursor: pointer;
+
+                .list-item:last-child {
+                    padding-bottom: 5px;
+                }
+
+                .list-item {
+                    padding: 5px 5px 5px 10px;
+
+                    .icon {
+                        display: none;
+                    }
+
+                    small {
+                        line-height: 0.7;
+                        display: block;
+                        margin-bottom: 5px;
+                        color: $main-border-local-color;
+                    }
+                }
+
+                .list-item:hover {
+                    color: white;
+
+                    small {
+                        color: white;
+                    }
+                }
+            }
+
+            .result-footer {
+                background-color: $main-border-local-color;
+                border-top: 1px solid $main-border-local-color;
+                padding: 4px 4px 4px 4px;
+                font-size: 90%;
+            }
+        }
+    }
+
+    @media (max-width:767px) {
+        .result {
+            border: 1px solid $main-border-local-color;
+            @include box-shadow-common;
+            z-index: 10;
+            margin-bottom: 30px;
+
+            .result-header {
+                background-color: $main-border-local-color;
+                text-align: center;
+            }
+
+            .result-list {
+                background-color: white;
+                cursor: pointer;
+
+                .list-item:last-child {
+                    padding-bottom: 5px;
+                }
+
+                .list-item {
+                    padding: 7px 5px 7px 10px;
+                    border-bottom: 1px solid $main-border-local-color;
+
+                    .icon {
+                        position: relative;
+                        color: $main-border-local-color;
+                        font-size: 15px;
+                        margin-top: 0;
+                        top: -20px;
+                    }
+
+                    small {
+                        line-height: 0.7;
+                        display: block;
+                        margin-bottom: 5px;
+                        color: $main-border-local-color;
+                    }
+                }
+
+                .list-item:last-child {
+                    border-bottom: none;
+                }
+
+                .list-item:hover {
+                    color: white;
+
+                    small {
+                        color: white;
+                    }
+                }
+            }
+
+            .result-footer {
+                background-color: $main-border-local-color;
+                border-top: 1px solid $main-border-local-color;
+                padding: 4px 4px 4px 4px;
+                font-size: 90%;
+            }
+        }
+    }
+}

@@ -5,37 +5,6 @@
 })();
 (function () {
     'use strict';
-
-    function highlightText() {
-        return {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            
-            scope: { searchText: '=',ngBind:'=' },
-            link: function (scope, element, attrs,ngBind) {
-               
-                scope.$watch('searchText', function (neww, old) {
-                    if (neww != null && scope.ngBind != null) {
-                        var regex = new RegExp(scope.searchText.toLowerCase(), 'i');
-                        var index = scope.ngBind.toLowerCase().indexOf(scope.searchText);
-                        if (index == -1)
-                            return element;
-                        var result = scope.ngBind.replace(regex, '<strong>' + scope.ngBind.substr(index, scope.searchText.length) + '</strong>'); //
-                        element.html('');
-                        return element.append(result);
-                    };
-                    return null;
-                }, true);
-              
-            }
-        }
-    }
-
-    angular.module('ui.controls').directive('highlightText', [highlightText]);
-})();
-(function () {
-    'use strict';
     function dateInput($timeout) {
         return {
             restrict: 'E',
@@ -284,17 +253,6 @@
     };
     angular.module('ui.controls').directive('dateInput', ['$timeout', dateInput]);
 })();
-(function(){
-    'use strict';
-    function errorMessage() {
-          return {
-            restrict: 'E',
-            transclude:true,
-            template: '<div class="well well-sm ui-message-error">  <span class=""></span><div class="well-text" ng-transclude></div></div>',
-        };
-    }
-    angular.module('ui.controls').directive('errorMessage', [errorMessage]);
-})();
 (function () {
 
     'use strict';
@@ -482,6 +440,37 @@
         }
     }
     angular.module('ui.controls').directive('grid', ['$filter', grid]);
+})();
+(function () {
+    'use strict';
+
+    function highlightText() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            replace: true,
+            
+            scope: { searchText: '=',ngBind:'=' },
+            link: function (scope, element, attrs,ngBind) {
+               
+                scope.$watch('searchText', function (neww, old) {
+                    if (neww != null && scope.ngBind != null) {
+                        var regex = new RegExp(scope.searchText.toLowerCase(), 'i');
+                        var index = scope.ngBind.toLowerCase().indexOf(scope.searchText);
+                        if (index == -1)
+                            return element;
+                        var result = scope.ngBind.replace(regex, '<strong>' + scope.ngBind.substr(index, scope.searchText.length) + '</strong>'); //
+                        element.html('');
+                        return element.append(result);
+                    };
+                    return null;
+                }, true);
+              
+            }
+        }
+    }
+
+    angular.module('ui.controls').directive('highlightText', [highlightText]);
 })();
 (function () {
     'use strict';
@@ -1127,7 +1116,7 @@
     function searchInput($http, $filter, $rootScope, $window, $document) {
         return {
             restrict: "E",
-            templateUrl: 'sec/searchInput/searchInput.html',
+            templateUrl: 'src/searchInput/searchInput.html',
             scope: { 'selectedevent': "&", 'connectionEvent': '@', 'searchText': '=?', 'placeholder': '@', 'apiAddress': '@', 'display': "=", 'addmanually': '&', 'hideaddmanually': '@' },
             controller: ['$scope', function ($scope) {
                 $scope.selectItem = function (id) {
@@ -1249,4 +1238,15 @@
         }
     }
     angular.module('ui.controls').directive('searchInput', ['$http', '$filter', '$rootScope', '$window', '$document', searchInput]);
+})();
+(function(){
+    'use strict';
+    function errorMessage() {
+          return {
+            restrict: 'E',
+            transclude:true,
+            template: '<div class="well well-sm ui-message-error">  <span class=""></span><div class="well-text" ng-transclude></div></div>',
+        };
+    }
+    angular.module('ui.controls').directive('errorMessage', [errorMessage]);
 })();

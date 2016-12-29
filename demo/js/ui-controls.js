@@ -4,194 +4,6 @@
     angular.module('ui.controls',[]);
 })();
 (function () {
-
-    'use strict';
-
-    function grid($filter) {
-        return {
-            templateUrl: 'src/grid/grid.html',
-            scope: { 'selectedevent': "&", 'connectionEvent': '@', 'gridSetup': '=', 'addmanually': '&', 'hideaddmanually': '@' },
-            controller: ['$scope', function ($scope) {
-                $scope.pageList = [];
-                $scope.dataList = [];
-                $scope.resultView = false;
-                $scope.preSearchText = "";
-                $scope.presentSelectedHeader = null;
-                $scope.currentPageSelected = 1;//init first page
-                $scope.numberFrom = -1;
-                $scope.numberItemStart = 0;//
-                $scope.numberItemEnd = 10;//
-                $scope.numberOfItemOnPage = 10; //default value is 10
-                $scope.getPaggingList = function () {
-                    if ($scope.dataList == null)
-                        return;
-                    if ($scope.numberOfItemOnPage == 'all') {
-                        $scope.pageList = [{ number: 1, isSelected: true }];
-                        $scope.checkFirstLastPage();
-                        return;
-                    }
-                    var numberPage = Math.ceil(($scope.dataList.length / $scope.numberOfItemOnPage));
-
-                    $scope.pageList = [];
-                    for (var i = 0; i < numberPage; i++) {
-                        $scope.pageList.push({ number: i + 1, isSelected: false });
-                        if ($scope.currentPageSelected == (i + 1)) {
-                            $scope.pageList[$scope.pageList.length - 1].isSelected = true;
-                        }
-
-                    }
-                    if (numberPage < 8)
-                        $scope.limitBegin = 0;
-                    else {//function is for checking if bottom progress should be update
-                        /////////////// TODO increase and decrease limit begin
-                    }
-                    $scope.checkFirstLastPage();
-                }
-                $scope.nextPage = function () {
-                    if (($scope.numberItemStart + $scope.numberOfItemOnPage > $scope.dataList.length) || $scope.lastPage == true)
-                        return;
-                    $scope.numberItemStart += $scope.numberOfItemOnPage;
-                    $scope.numberItemEnd += $scope.numberOfItemOnPage;
-                    $scope.currentPageSelected++;
-                    if ($scope.numberItemEnd > $scope.dataList.length)
-                        $scope.numberItemEnd = $scope.dataList.length;
-                    $scope.getPaggingList();
-                }
-                $scope.setPage = function (pageNumber) {
-
-                    $scope.currentPageSelected = pageNumber;
-                    $scope.numberItemStart = ($scope.numberOfItemOnPage * (pageNumber - 1));
-                    $scope.numberItemEnd = ($scope.numberOfItemOnPage * pageNumber);
-                    if ($scope.numberItemEnd > $scope.dataList.length)
-                        $scope.numberItemEnd = $scope.dataList.length;
-                    $scope.getPaggingList();
-                }
-                $scope.prePage = function () {
-                    if (($scope.numberItemStart - $scope.numberOfItemOnPage < 0) || $scope.firstPage == true)
-                        return;
-                    $scope.numberItemStart -= $scope.numberOfItemOnPage;
-                    $scope.numberItemEnd -= $scope.numberOfItemOnPage;
-                    $scope.currentPageSelected--;
-                    $scope.getPaggingList();
-                    //check if this is last page
-
-                }
-                $scope.setNumberOfItemOnPage = function (val) {
-                    if ($scope.numberOfItemOnPage == val)
-                        return;
-                    $scope.numberItemStart = 0;
-                    $scope.currentPageSelected = 1;
-                    if (val == 'all') {
-                        $scope.numberItemEnd = $scope.dataList.length;
-
-                    } else {
-                        if ($scope.numberOfItemOnPage == 'all') {
-                            $scope.numberItemEnd = val;
-
-                        } else {
-                            //  $scope.numberItemEnd -= $scope.numberOfItemOnPage; //reset to 0
-                            //  $scope.numberItemEnd += val;
-                            $scope.numberItemEnd = val;
-                        }
-                    }
-                    if ($scope.numberItemEnd > $scope.dataList.length)
-                        $scope.numberItemEnd = $scope.dataList.length;
-
-                    $scope.numberOfItemOnPage = val;
-                    $scope.getPaggingList();
-
-                }
-
-                $scope.checkFirstLastPage = function () {
-
-                    if ($scope.numberOfItemOnPage == 'all' || $scope.dataList.length <= 10) {
-                        $scope.firstPage = true;
-                        $scope.lastPage = true;
-                        return;
-                    }
-                    if ($scope.numberItemStart + $scope.numberOfItemOnPage > $scope.dataList.length) {
-                        $scope.lastPage = true;
-                    } else {
-                        $scope.lastPage = false;
-                    }
-                    //check if this is first page
-                    if ($scope.numberItemStart - $scope.numberOfItemOnPage < 0)
-                        $scope.firstPage = true;
-                    else {
-                        $scope.firstPage = false;
-                    }
-                    $scope.normalizePageNumber();
-                }
-                $scope.normalizePageNumber = function () {
-                    if ($scope.lastPage === false) {
-                        //todo 
-                    }
-                }
-            }],
-            link: function (scope, element, attrs) {
-
-                element.hide();
-                scope.selectItem = function (id) {
-                    if (scope.selectedevent != null) {
-                        scope.selectedItem = $filter('getById')(scope.dataList, id);
-                        scope.selectedevent({ result: scope.selectedItem });
-                        element.hide();
-                    }
-                }
-
-                scope.$on('CLEAR_FORM', function (e) {
-                    scope.searchText = '';
-                    element.hide();
-                    scope.dataList = [];
-                });
-                scope.$on(scope.connectionEvent, function (e, data) {
-                    if (data.searchText ==null || data.searchText == "") {
-                        element.hide();
-                        return;
-                    }
-                    scope.dataList = data.dataList;
-                    scope.searchText = data.searchText;
-                    element.show();
-                    scope.getPaggingList();
-                    scope.firstPage = true;
-                    if(scope.dataList.length > 10)
-                        scope.lastPage = false;
-                    else
-                        scope.lastPage = true;
-
-                    scope.clickHeader({target:$('.grid-col-header').first()[0]}, scope.gridSetup.col[0]);
-                });
-                scope.clickHeader = function ($event, headObj) {
-                    var sortBy = headObj.dataName;
-                    if (scope.sortBy == sortBy || scope.sortBy == '-' + sortBy) {
-                        if (scope.sortBy == '-' + sortBy) {
-                            scope.sortBy = sortBy;
-                            $($event.target).find('.icon').removeClass('icon-rotate-180');
-
-                        } else {
-                            scope.sortBy = '-' + sortBy;
-                            $($event.target).find('.icon').addClass('icon-rotate-180');
-                        }
-                    } else {
-                        if (scope.presentSelectedHeader != null) {
-                            scope.presentSelectedHeader.selected = false;
-                        }
-                        scope.presentSelectedHeader = headObj;
-                        scope.sortBy = sortBy;
-                        headObj.selected = true;
-                     
-                        $('.active-col-header').removeClass('active-col-header');
-                        $('.active-col-header').removeClass('icon-rotate-180');
-                        $($event.target).addClass('active-col-header');
-                    }
-                }
-             
-            }
-        }
-    }
-    angular.module('ui.controls').directive('grid', ['$filter', grid]);
-})();
-(function () {
     'use strict';
     function dateInput($timeout) {
         return {
@@ -442,6 +254,194 @@
     angular.module('ui.controls').directive('dateInput', ['$timeout', dateInput]);
 })();
 (function () {
+
+    'use strict';
+
+    function grid($filter) {
+        return {
+            templateUrl: 'src/grid/grid.html',
+            scope: { 'selectedevent': "&", 'connectionEvent': '@', 'gridSetup': '=', 'addmanually': '&', 'hideaddmanually': '@' },
+            controller: ['$scope', function ($scope) {
+                $scope.pageList = [];
+                $scope.dataList = [];
+                $scope.resultView = false;
+                $scope.preSearchText = "";
+                $scope.presentSelectedHeader = null;
+                $scope.currentPageSelected = 1;//init first page
+                $scope.numberFrom = -1;
+                $scope.numberItemStart = 0;//
+                $scope.numberItemEnd = 10;//
+                $scope.numberOfItemOnPage = 10; //default value is 10
+                $scope.getPaggingList = function () {
+                    if ($scope.dataList == null)
+                        return;
+                    if ($scope.numberOfItemOnPage == 'all') {
+                        $scope.pageList = [{ number: 1, isSelected: true }];
+                        $scope.checkFirstLastPage();
+                        return;
+                    }
+                    var numberPage = Math.ceil(($scope.dataList.length / $scope.numberOfItemOnPage));
+
+                    $scope.pageList = [];
+                    for (var i = 0; i < numberPage; i++) {
+                        $scope.pageList.push({ number: i + 1, isSelected: false });
+                        if ($scope.currentPageSelected == (i + 1)) {
+                            $scope.pageList[$scope.pageList.length - 1].isSelected = true;
+                        }
+
+                    }
+                    if (numberPage < 8)
+                        $scope.limitBegin = 0;
+                    else {//function is for checking if bottom progress should be update
+                        /////////////// TODO increase and decrease limit begin
+                    }
+                    $scope.checkFirstLastPage();
+                }
+                $scope.nextPage = function () {
+                    if (($scope.numberItemStart + $scope.numberOfItemOnPage > $scope.dataList.length) || $scope.lastPage == true)
+                        return;
+                    $scope.numberItemStart += $scope.numberOfItemOnPage;
+                    $scope.numberItemEnd += $scope.numberOfItemOnPage;
+                    $scope.currentPageSelected++;
+                    if ($scope.numberItemEnd > $scope.dataList.length)
+                        $scope.numberItemEnd = $scope.dataList.length;
+                    $scope.getPaggingList();
+                }
+                $scope.setPage = function (pageNumber) {
+
+                    $scope.currentPageSelected = pageNumber;
+                    $scope.numberItemStart = ($scope.numberOfItemOnPage * (pageNumber - 1));
+                    $scope.numberItemEnd = ($scope.numberOfItemOnPage * pageNumber);
+                    if ($scope.numberItemEnd > $scope.dataList.length)
+                        $scope.numberItemEnd = $scope.dataList.length;
+                    $scope.getPaggingList();
+                }
+                $scope.prePage = function () {
+                    if (($scope.numberItemStart - $scope.numberOfItemOnPage < 0) || $scope.firstPage == true)
+                        return;
+                    $scope.numberItemStart -= $scope.numberOfItemOnPage;
+                    $scope.numberItemEnd -= $scope.numberOfItemOnPage;
+                    $scope.currentPageSelected--;
+                    $scope.getPaggingList();
+                    //check if this is last page
+
+                }
+                $scope.setNumberOfItemOnPage = function (val) {
+                    if ($scope.numberOfItemOnPage == val)
+                        return;
+                    $scope.numberItemStart = 0;
+                    $scope.currentPageSelected = 1;
+                    if (val == 'all') {
+                        $scope.numberItemEnd = $scope.dataList.length;
+
+                    } else {
+                        if ($scope.numberOfItemOnPage == 'all') {
+                            $scope.numberItemEnd = val;
+
+                        } else {
+                            //  $scope.numberItemEnd -= $scope.numberOfItemOnPage; //reset to 0
+                            //  $scope.numberItemEnd += val;
+                            $scope.numberItemEnd = val;
+                        }
+                    }
+                    if ($scope.numberItemEnd > $scope.dataList.length)
+                        $scope.numberItemEnd = $scope.dataList.length;
+
+                    $scope.numberOfItemOnPage = val;
+                    $scope.getPaggingList();
+
+                }
+
+                $scope.checkFirstLastPage = function () {
+
+                    if ($scope.numberOfItemOnPage == 'all' || $scope.dataList.length <= 10) {
+                        $scope.firstPage = true;
+                        $scope.lastPage = true;
+                        return;
+                    }
+                    if ($scope.numberItemStart + $scope.numberOfItemOnPage > $scope.dataList.length) {
+                        $scope.lastPage = true;
+                    } else {
+                        $scope.lastPage = false;
+                    }
+                    //check if this is first page
+                    if ($scope.numberItemStart - $scope.numberOfItemOnPage < 0)
+                        $scope.firstPage = true;
+                    else {
+                        $scope.firstPage = false;
+                    }
+                    $scope.normalizePageNumber();
+                }
+                $scope.normalizePageNumber = function () {
+                    if ($scope.lastPage === false) {
+                        //todo 
+                    }
+                }
+            }],
+            link: function (scope, element, attrs) {
+
+                element.hide();
+                scope.selectItem = function (id) {
+                    if (scope.selectedevent != null) {
+                        scope.selectedItem = $filter('getById')(scope.dataList, id);
+                        scope.selectedevent({ result: scope.selectedItem });
+                        element.hide();
+                    }
+                }
+
+                scope.$on('CLEAR_FORM', function (e) {
+                    scope.searchText = '';
+                    element.hide();
+                    scope.dataList = [];
+                });
+                scope.$on(scope.connectionEvent, function (e, data) {
+                    if (data.searchText ==null || data.searchText == "") {
+                        element.hide();
+                        return;
+                    }
+                    scope.dataList = data.dataList;
+                    scope.searchText = data.searchText;
+                    element.show();
+                    scope.getPaggingList();
+                    scope.firstPage = true;
+                    if(scope.dataList.length > 10)
+                        scope.lastPage = false;
+                    else
+                        scope.lastPage = true;
+
+                    scope.clickHeader({target:$('.grid-col-header').first()[0]}, scope.gridSetup.col[0]);
+                });
+                scope.clickHeader = function ($event, headObj) {
+                    var sortBy = headObj.dataName;
+                    if (scope.sortBy == sortBy || scope.sortBy == '-' + sortBy) {
+                        if (scope.sortBy == '-' + sortBy) {
+                            scope.sortBy = sortBy;
+                            $($event.target).find('.icon').removeClass('icon-rotate-180');
+
+                        } else {
+                            scope.sortBy = '-' + sortBy;
+                            $($event.target).find('.icon').addClass('icon-rotate-180');
+                        }
+                    } else {
+                        if (scope.presentSelectedHeader != null) {
+                            scope.presentSelectedHeader.selected = false;
+                        }
+                        scope.presentSelectedHeader = headObj;
+                        scope.sortBy = sortBy;
+                        headObj.selected = true;
+                     
+                        $('.active-col-header').removeClass('active-col-header');
+                        $('.active-col-header').removeClass('icon-rotate-180');
+                        $($event.target).addClass('active-col-header');
+                    }
+                }
+             
+            }
+        }
+    }
+    angular.module('ui.controls').directive('grid', ['$filter', grid]);
+})();
+(function () {
     'use strict';
 
     function highlightText() {
@@ -482,6 +482,200 @@
         };
     }
     angular.module('ui.controls').directive('errorMessage', [errorMessage]);
+})();
+(function () {
+    'use strict';
+    function phoneInput($timeout) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: 'ngModel',
+            scope: { ngModel: '=' },
+            compile: function compile(tElement, tAttrs, transclude) {
+                return {
+                    post: function postLink(scope, iElement, iAttrs, controller) {
+                        scope.jumpToNextField = false;
+                        scope.isSelected = false;
+                        scope.idOfElement = Math.floor(Math.random() * 1000000);
+                        scope.phoneinput1 = scope.phoneinput2 = scope.phoneinput3 = "";
+                        scope.stringNumber = ["", "", ""];
+                        iElement.attr("id", scope.idOfElement);
+                        var reg = /[^0-9]/g;
+                        var unbindWatcher = scope.$watch('ngModel', function (newVal) {
+                            if (newVal != null) {
+                                var re = /[^0-9]/;
+                                var justNumber = scope.ngModel.split(re).join('');
+                                //scope.updateModel
+                                scope.stringNumber[0] = scope.phoneinput1 = justNumber.substr(0, 3);
+                                scope.stringNumber[1] = scope.phoneinput2 = justNumber.substr(3, 3);
+                                scope.stringNumber[2] = scope.phoneinput3 = justNumber.substr(6, 4);
+                                unbindWatcher();//after init we dont need it
+                                scope.updateModel();
+                                scope.validation();
+                            }
+                        });
+                        scope.phoneinput1Change = function (text) {
+
+                            if (text == undefined) {
+                                text = $('#' + scope.idOfElement + ' .phoneinput1').val();
+                            }
+                            scope.phoneinput1 = text = text.replace(reg, '');
+
+                            var textLength = text.length;
+                            if (textLength == 3) {
+                                $("#" + scope.idOfElement + " .phoneinput2").select();
+                            }
+                            else if (textLength > 3) {
+                                scope.phoneinput1 = text = scope.phoneinput1.toString().substring(0, 3);
+                                $("#" + scope.idOfElement + " .phoneinput2").select();
+                            }
+                           
+                            scope.stringNumber[0] = text;
+                            scope.updateModel();
+                        }
+
+                        scope.phoneinput2Change = function (text) {
+
+                            if (text == undefined) {
+                                text = $('#' + scope.idOfElement + ' .phoneinput2').val();
+                            }
+                            scope.phoneinput2 = text = text.replace(reg, '');
+
+                            var textLength = text.length;
+                            if (textLength == 3) {
+                                $("#" + scope.idOfElement + " .phoneinput3").select();
+                            }
+                            else if (textLength > 3) {
+                                scope.phoneinput2 = text = scope.phoneinput2.toString().substring(0, 3);
+                                $("#" + scope.idOfElement + " .phoneinput3").select();
+                            }
+                            
+                            scope.stringNumber[1] = text;
+                            scope.updateModel();
+                        }
+                        scope.phoneinput3Change = function (text) {
+
+                            if (text == undefined) {
+                                text = $('#' + scope.idOfElement + ' .phoneinput3').val();
+                            }
+                            scope.phoneinput3 = text = text.replace(reg, '');
+
+                            var textLength = text.length;
+
+                            if (textLength > 4) {
+                                scope.phoneinput3 = text = scope.phoneinput3.substring(0, 4);
+                                scope.stringNumber[2] = scope.phoneinput3.toString();
+                            }
+                           
+                            
+                            scope.stringNumber[2] = text;
+                            scope.updateModel();
+                            if (textLength == 4) {//revalid
+                                scope.validation();
+                            }
+                        }
+                        scope.updateModel = function () {
+
+                            scope.ngModel = scope.stringNumber[0] + "" + scope.stringNumber[1] + "" + scope.stringNumber[2];
+                        }
+                        scope.validation = function () {
+
+                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
+                                controller.$setValidity('required', false);
+                                return;
+                            }
+                            if (scope.stringNumber[2].length < 4) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            else if (scope.stringNumber[1].length < 3) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            else if (scope.stringNumber[0].length < 3) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            controller.$setValidity('required', true);
+                            controller.$setValidity('invalid', true);
+
+                        }
+                        scope.validationOnlyinvalid = function () {
+                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            if (scope.stringNumber[2].length < 4) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            else if (scope.stringNumber[1].length < 3) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            else if (scope.stringNumber[0].length < 3) {
+                                controller.$setValidity('invalid', false);
+                                return;
+                            }
+                            controller.$setValidity('required', true);
+                            controller.$setValidity('invalid', true);
+
+                        }
+                        scope.$watch(function (scope) { return scope.focus }, function (newValue) {
+                            if (newValue == true && scope.jumpToNextField == false) {
+                                scope.isSelected = true;
+
+                            } else if (newValue == false && scope.jumpToNextField == false) {
+                                scope.isSelected = false;
+                            }
+                        });
+                        scope.$on('PHONE-CHECK-VALIDATION', function (event, args) {
+
+                            controller.$setValidity('required', true);
+                            controller.$setValidity('invalid', true);
+
+                        });
+                        scope.$watch(function (scope) { return scope.blur }, function (newValue) {
+                            if (scope.jumpToNextField == true) {
+                                scope.jumpToNextField = false;
+                                return;
+                            }
+                            if (newValue == true && scope.isSelected == false) {
+                                scope.isSelected = false;
+
+                                controller.$touched = true;
+                                if (iAttrs.required == true) {
+
+                                  controller.$setValidity('required', true);
+                                  scope.validation();
+
+                                }
+                                else if (scope.stringNumber[0].length > 0 || scope.stringNumber[1].length > 0 || scope.stringNumber[2].length > 0) {
+                                    scope.validationOnlyinvalid();
+                                }
+                                else if (scope.stringNumber[0].length == 0 && scope.stringNumber[1].length == 0 && scope.stringNumber[2].length == 0) {
+                                    controller.$setValidity('invalid', true);
+                                }
+                            }
+                        });
+                        controller.$parsers.unshift(function (viewValue) {
+                            scope.pwdLength = scope.date1.toString().length == 4 ? true : false;
+                            if (scope.pwdLengt == true) { // If all is good, then…
+                                ctrcontrollerl.$setValidity('required', true); // Tell the controlller that the value is valid
+                                return viewValue; // Return this value (it will be put into the model)
+                            } else { // … otherwise…
+                                controller.$setValidity('required', false); // Tell the controlller that the value is invalid
+                                return undefined; // When the value is invalid, we should return `undefined`, as asked by the documentation
+                            }
+
+                        });
+                    }
+                }
+            },
+            templateUrl: "src/phoneInput/phoneInput.html",
+        }
+    }
+    angular.module('ui.controls').directive('phoneInput', ['$timeout',  phoneInput])
 })();
 (function () {
     'use strict';
@@ -774,197 +968,131 @@
 
 (function () {
     'use strict';
-    function phoneInput($timeout) {
+    function searchInput($http, $filter, $rootScope, $window, $document) {
         return {
-            restrict: 'E',
-            replace: true,
-            require: 'ngModel',
-            scope: { ngModel: '=' },
-            compile: function compile(tElement, tAttrs, transclude) {
-                return {
-                    post: function postLink(scope, iElement, iAttrs, controller) {
-                        scope.jumpToNextField = false;
-                        scope.isSelected = false;
-                        scope.idOfElement = Math.floor(Math.random() * 1000000);
-                        scope.phoneinput1 = scope.phoneinput2 = scope.phoneinput3 = "";
-                        scope.stringNumber = ["", "", ""];
-                        iElement.attr("id", scope.idOfElement);
-                        var reg = /[^0-9]/g;
-                        var unbindWatcher = scope.$watch('ngModel', function (newVal) {
-                            if (newVal != null) {
-                                var re = /[^0-9]/;
-                                var justNumber = scope.ngModel.split(re).join('');
-                                //scope.updateModel
-                                scope.stringNumber[0] = scope.phoneinput1 = justNumber.substr(0, 3);
-                                scope.stringNumber[1] = scope.phoneinput2 = justNumber.substr(3, 3);
-                                scope.stringNumber[2] = scope.phoneinput3 = justNumber.substr(6, 4);
-                                unbindWatcher();//after init we dont need it
-                                scope.updateModel();
-                                scope.validation();
-                            }
-                        });
-                        scope.phoneinput1Change = function (text) {
+            restrict: "E",
+            templateUrl: 'src/searchInput/searchInput.html',
+            scope: { 'selectedevent': "&", 'connectionEvent': '@', 'searchText': '=?', 'placeholder': '@', 'apiAddress': '@', 'display': "=", 'addmanually': '&', 'hideaddmanually': '@' },
+            controller: ['$scope', function ($scope) {
+                $scope.selectItem = function (id) {
+                    if ($scope.selectedevent != null) {
+                        $scope.selectedItem = $filter('getById')($scope.dataList, id);
+                        $scope.selectedevent({ result: $scope.selectedItem });
+                        $scope.resultView = false;
+                    }
+                }
+                $scope.showAllData = function () {
 
-                            if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .phoneinput1').val();
-                            }
-                            scope.phoneinput1 = text = text.replace(reg, '');
-
-                            var textLength = text.length;
-                            if (textLength == 3) {
-                                $("#" + scope.idOfElement + " .phoneinput2").select();
-                            }
-                            else if (textLength > 3) {
-                                scope.phoneinput1 = text = scope.phoneinput1.toString().substring(0, 3);
-                                $("#" + scope.idOfElement + " .phoneinput2").select();
-                            }
-                           
-                            scope.stringNumber[0] = text;
-                            scope.updateModel();
-                        }
-
-                        scope.phoneinput2Change = function (text) {
-
-                            if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .phoneinput2').val();
-                            }
-                            scope.phoneinput2 = text = text.replace(reg, '');
-
-                            var textLength = text.length;
-                            if (textLength == 3) {
-                                $("#" + scope.idOfElement + " .phoneinput3").select();
-                            }
-                            else if (textLength > 3) {
-                                scope.phoneinput2 = text = scope.phoneinput2.toString().substring(0, 3);
-                                $("#" + scope.idOfElement + " .phoneinput3").select();
-                            }
-                            
-                            scope.stringNumber[1] = text;
-                            scope.updateModel();
-                        }
-                        scope.phoneinput3Change = function (text) {
-
-                            if (text == undefined) {
-                                text = $('#' + scope.idOfElement + ' .phoneinput3').val();
-                            }
-                            scope.phoneinput3 = text = text.replace(reg, '');
-
-                            var textLength = text.length;
-
-                            if (textLength > 4) {
-                                scope.phoneinput3 = text = scope.phoneinput3.substring(0, 4);
-                                scope.stringNumber[2] = scope.phoneinput3.toString();
-                            }
-                           
-                            
-                            scope.stringNumber[2] = text;
-                            scope.updateModel();
-                            if (textLength == 4) {//revalid
-                                scope.validation();
-                            }
-                        }
-                        scope.updateModel = function () {
-
-                            scope.ngModel = scope.stringNumber[0] + "" + scope.stringNumber[1] + "" + scope.stringNumber[2];
-                        }
-                        scope.validation = function () {
-
-                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
-                                controller.$setValidity('required', false);
-                                return;
-                            }
-                            if (scope.stringNumber[2].length < 4) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            else if (scope.stringNumber[1].length < 3) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            else if (scope.stringNumber[0].length < 3) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            controller.$setValidity('required', true);
-                            controller.$setValidity('invalid', true);
-
-                        }
-                        scope.validationOnlyinvalid = function () {
-                            if (scope.phoneinput3 == null || scope.phoneinput2 == null || scope.phoneinput1 == null) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            if (scope.stringNumber[2].length < 4) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            else if (scope.stringNumber[1].length < 3) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            else if (scope.stringNumber[0].length < 3) {
-                                controller.$setValidity('invalid', false);
-                                return;
-                            }
-                            controller.$setValidity('required', true);
-                            controller.$setValidity('invalid', true);
-
-                        }
-                        scope.$watch(function (scope) { return scope.focus }, function (newValue) {
-                            if (newValue == true && scope.jumpToNextField == false) {
-                                scope.isSelected = true;
-
-                            } else if (newValue == false && scope.jumpToNextField == false) {
-                                scope.isSelected = false;
-                            }
-                        });
-                        scope.$on('PHONE-CHECK-VALIDATION', function (event, args) {
-
-                            controller.$setValidity('required', true);
-                            controller.$setValidity('invalid', true);
-
-                        });
-                        scope.$watch(function (scope) { return scope.blur }, function (newValue) {
-                            if (scope.jumpToNextField == true) {
-                                scope.jumpToNextField = false;
-                                return;
-                            }
-                            if (newValue == true && scope.isSelected == false) {
-                                scope.isSelected = false;
-
-                                controller.$touched = true;
-                                if (iAttrs.required == true) {
-
-                                  controller.$setValidity('required', true);
-                                  scope.validation();
-
-                                }
-                                else if (scope.stringNumber[0].length > 0 || scope.stringNumber[1].length > 0 || scope.stringNumber[2].length > 0) {
-                                    scope.validationOnlyinvalid();
-                                }
-                                else if (scope.stringNumber[0].length == 0 && scope.stringNumber[1].length == 0 && scope.stringNumber[2].length == 0) {
-                                    controller.$setValidity('invalid', true);
-                                }
-                            }
-                        });
-                        controller.$parsers.unshift(function (viewValue) {
-                            scope.pwdLength = scope.date1.toString().length == 4 ? true : false;
-                            if (scope.pwdLengt == true) { // If all is good, then…
-                                ctrcontrollerl.$setValidity('required', true); // Tell the controlller that the value is valid
-                                return viewValue; // Return this value (it will be put into the model)
-                            } else { // … otherwise…
-                                controller.$setValidity('required', false); // Tell the controlller that the value is invalid
-                                return undefined; // When the value is invalid, we should return `undefined`, as asked by the documentation
-                            }
-
+                    var dataPackage = { dataList: $scope.dataList, searchText: $scope.searchText }
+                    $rootScope.$broadcast($scope.connectionEvent, dataPackage);
+                    if ($scope.resultView == true) {
+                        $scope.resultView = false;
+                    }
+                }
+            }],
+            link: function (scope, element, attrs) {
+                scope.resultView = false;
+                scope.dataList = [];
+                scope.preSearchText = "";
+                scope.presentSelectedHeader = null;
+                scope.numberOfPage = -1;
+                scope.numberOfItemOnPage = 10; //default value is 10
+                //init listeners
+            var globalClickEvent = function (evt) {
+                    if (element[0].contains(evt.target) == false) {
+                        scope.$apply(function () {
+                            scope.resultView = false;
                         });
                     }
                 }
-            },
-            templateUrl: "src/phoneInput/phoneInput.html",
+
+                $document.on('click', globalClickEvent);
+                //end listeners
+                scope.$on('$destroy', function () {
+                    $document.off('click', globalClickEvent);
+                });
+                scope.clickHeader = function ($event, headObj) {
+                    var sortBy = headObj.dataName;
+                    if (scope.sortBy == sortBy || scope.sortBy == '-' + sortBy) {
+                        if (scope.sortBy == '-' + sortBy) {
+                            scope.sortBy = sortBy;
+                            $($event.target).find('.icon').removeClass('icon-rotate-180');
+                        } else {
+                            scope.sortBy = '-' + sortBy;
+
+                            $($event.target).find('.icon').addClass('icon-rotate-180');
+                        }
+                    } else {
+                        if (scope.presentSelectedHeader != null) {
+                            scope.presentSelectedHeader.selected = false;
+                        }
+                        scope.presentSelectedHeader = headObj;
+                        scope.sortBy = sortBy;
+                        headObj.selected = true;
+                        $('.active-col-header').removeClass('active-col-header');
+                        $('.active-col-header').removeClass('icon-rotate-180');
+                        $($event.target).addClass('active-col-header');
+
+                    }
+                }
+                scope.$on('CLEAR_FORM', function (e) {
+                    scope.searchText = "";
+                    scope.resultView = false;
+                    scope.dataList = [];
+                });
+                $(element).find('.result').width($('.main-part').width() - 1);//set width of 
+                scope.clearSearchField = function () {
+                    scope.searchText = "";
+                };
+                element.bind("keyup", function (event) {
+                    if (event.which === 13) {
+                        scope.$apply(function () {
+                            scope.showAllData();
+                        });
+                        event.preventDefault();
+                    } else if (event.which == 27) {
+                        scope.$apply(function() {
+                            scope.resultView = false;
+                        });
+                    }
+                });
+                scope.$watch('searchText', function (newVal) {
+                    if (newVal != null) {
+                        if (newVal.length == 0) {
+                            scope.resultView = false;
+                            scope.dataList = [];
+                        } else {
+
+                            if (newVal != scope.preSearchText) {
+                                $http.get(scope.apiAddress, { params: { searchtext: newVal } }).then(function (data) {
+                                    if (data.data.highSchool != null)
+                                        scope.dataList = data.data.highSchool;
+                                    else if (data.data.colleges != null)
+                                        scope.dataList = data.data.colleges;
+                                    else {
+                                        scope.dataList = data.data.agencies;
+                                    }
+                                    scope.numberOfPage = Math.ceil(scope.dataList.length / scope.numberOfItemOnPage);
+                                    if ($window.innerWidth > 767) {
+                                        $(element).find('.result').width($(element).find('.main-part').width() - 1);//set width of 
+                                    }
+                                    else {
+                                        (element).find('.result').width('100%');
+                                    }
+                                    scope.resultView = true;  // for showing table
+                                }, function () {
+
+                                });
+                            }
+
+
+                        }
+                    }
+                });
+            }
         }
     }
-    angular.module('ui.controls').directive('phoneInput', ['$timeout',  phoneInput])
+    angular.module('ui.controls').directive('searchInput', ['$http', '$filter', '$rootScope', '$window', '$document', searchInput]);
 })();
 (function () {
     'use strict';
@@ -1121,132 +1249,4 @@
         }
     }
     angular.module('ui.controls').directive('ssnInput', ['$compile',ssnInput]);
-})();
-(function () {
-    'use strict';
-    function searchInput($http, $filter, $rootScope, $window, $document) {
-        return {
-            restrict: "E",
-            templateUrl: 'sec/searchInput/searchInput.html',
-            scope: { 'selectedevent': "&", 'connectionEvent': '@', 'searchText': '=?', 'placeholder': '@', 'apiAddress': '@', 'display': "=", 'addmanually': '&', 'hideaddmanually': '@' },
-            controller: ['$scope', function ($scope) {
-                $scope.selectItem = function (id) {
-                    if ($scope.selectedevent != null) {
-                        $scope.selectedItem = $filter('getById')($scope.dataList, id);
-                        $scope.selectedevent({ result: $scope.selectedItem });
-                        $scope.resultView = false;
-                    }
-                }
-                $scope.showAllData = function () {
-
-                    var dataPackage = { dataList: $scope.dataList, searchText: $scope.searchText }
-                    $rootScope.$broadcast($scope.connectionEvent, dataPackage);
-                    if ($scope.resultView == true) {
-                        $scope.resultView = false;
-                    }
-                }
-            }],
-            link: function (scope, element, attrs) {
-                scope.resultView = false;
-                scope.dataList = [];
-                scope.preSearchText = "";
-                scope.presentSelectedHeader = null;
-                scope.numberOfPage = -1;
-                scope.numberOfItemOnPage = 10; //default value is 10
-                //init listeners
-            var globalClickEvent = function (evt) {
-                    if (element[0].contains(evt.target) == false) {
-                        scope.$apply(function () {
-                            scope.resultView = false;
-                        });
-                    }
-                }
-
-                $document.on('click', globalClickEvent);
-                //end listeners
-                scope.$on('$destroy', function () {
-                    $document.off('click', globalClickEvent);
-                });
-                scope.clickHeader = function ($event, headObj) {
-                    var sortBy = headObj.dataName;
-                    if (scope.sortBy == sortBy || scope.sortBy == '-' + sortBy) {
-                        if (scope.sortBy == '-' + sortBy) {
-                            scope.sortBy = sortBy;
-                            $($event.target).find('.icon').removeClass('icon-rotate-180');
-                        } else {
-                            scope.sortBy = '-' + sortBy;
-
-                            $($event.target).find('.icon').addClass('icon-rotate-180');
-                        }
-                    } else {
-                        if (scope.presentSelectedHeader != null) {
-                            scope.presentSelectedHeader.selected = false;
-                        }
-                        scope.presentSelectedHeader = headObj;
-                        scope.sortBy = sortBy;
-                        headObj.selected = true;
-                        $('.active-col-header').removeClass('active-col-header');
-                        $('.active-col-header').removeClass('icon-rotate-180');
-                        $($event.target).addClass('active-col-header');
-
-                    }
-                }
-                scope.$on('CLEAR_FORM', function (e) {
-                    scope.searchText = "";
-                    scope.resultView = false;
-                    scope.dataList = [];
-                });
-                $(element).find('.result').width($('.main-part').width() - 1);//set width of 
-                scope.clearSearchField = function () {
-                    scope.searchText = "";
-                };
-                element.bind("keyup", function (event) {
-                    if (event.which === 13) {
-                        scope.$apply(function () {
-                            scope.showAllData();
-                        });
-                        event.preventDefault();
-                    } else if (event.which == 27) {
-                        scope.$apply(function() {
-                            scope.resultView = false;
-                        });
-                    }
-                });
-                scope.$watch('searchText', function (newVal) {
-                    if (newVal != null) {
-                        if (newVal.length == 0) {
-                            scope.resultView = false;
-                            scope.dataList = [];
-                        } else {
-
-                            if (newVal != scope.preSearchText) {
-                                $http.get(scope.apiAddress, { params: { searchtext: newVal } }).then(function (data) {
-                                    if (data.data.highSchool != null)
-                                        scope.dataList = data.data.highSchool;
-                                    else if (data.data.colleges != null)
-                                        scope.dataList = data.data.colleges;
-                                    else {
-                                        scope.dataList = data.data.agencies;
-                                    }
-                                    scope.numberOfPage = Math.ceil(scope.dataList.length / scope.numberOfItemOnPage);
-                                    if ($window.innerWidth > 767) {
-                                        $(element).find('.result').width($(element).find('.main-part').width() - 1);//set width of 
-                                    }
-                                    else {
-                                        (element).find('.result').width('100%');
-                                    }
-                                    scope.resultView = true;  // for showing table
-                                }, function () {
-
-                                });
-                            }
-
-
-                        }
-                    }
-                });
-            }
-        }
-    }
-    angular.module('ui.controls').directive('searchInput', ['$http', '$filter', '$rootScope', '$window', '$document', searchInput]);
 })();

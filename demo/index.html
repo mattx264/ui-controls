@@ -54,7 +54,7 @@
                 <div class="col-md-6">
                     <div class="well well-extra">
                         <h4>Description:</h4>
-                        <div>UI controll for user date input...</div>
+                        <div>UI control for user date input...</div>
                         <h4>Options:</h4>
                         <ul>
                             <li>
@@ -105,7 +105,7 @@
                 <div class="col-md-6">
                     <div class="well well-extra">
                         <h4>Description:</h4>
-                        <div>UI controll for user phone input...</div>
+                        <div>UI control for user phone input...</div>
                         <h4>Options:</h4>
                         <ul>
                             <li>
@@ -146,7 +146,7 @@
                 <div class="col-md-6">
                     <div class="well well-extra">
                         <h4>Description:</h4>
-                        <div>UI controll for user ssn input...</div>
+                        <div>UI control for user ssn input...</div>
                         <h4>Options:</h4>
                         <ul>
                             <li>
@@ -199,7 +199,7 @@
                 <div class="col-md-6">
                     <div class="well well-extra">
                         <h4>Description:</h4>
-                        <div>Form controll for show/hide password.</div>
+                        <div>Form control for show/hide password.</div>
                     </div>
                 </div>
             </div>
@@ -213,7 +213,7 @@
             </h4>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="alert alert-info">Warning: To see mobile drop down - open website in screen > 767px</div>
+                    <div class="alert alert-info">Warning: To see mobile drop down - open website in screen < 767px</div>
                 </div>
             </div>
             <div class="row">
@@ -225,13 +225,16 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-12">
-                                Select Country:{{mobileDDL.id}}
+                                Select Country:
                                 <select class="form-control col-xs-12"
                                         mobile-dropdown ng-model="mobileDDL.id" 
                                         ng-options="item.id as item.name for item in mobileDDL.countries">
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-8">
+                        Selected Country Id :{{mobileDDL.id}}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -251,14 +254,14 @@
             </h4>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="col-md-8">
-                        <div ng-show="mobileDropdown.$submitted  || mobileDropdown.Phone.$touched">
-                        </div>
-                    </div>
+                   
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" id="mypassword">
+                                 <search-input display="{main:'description',list:[]}" placeholder="Start typing keyword"
+                                        api-address="api/educationalAlliances/Agencies" selectedevent="allianceselected(result)" hideaddmanually="'true'"
+                                        connection-event="{{pipeName}}" search-text="searchText">
+                                </search-input>
                             </div>
                         </div>
                         <div class="row">
@@ -271,7 +274,7 @@
                 <div class="col-md-6">
                     <div class="well well-extra">
                         <h4>Description:</h4>
-                        <div>Form controll for show/hide password.</div>
+                        <div>Show/hide password.</div>
                     </div>
                 </div>
             </div>
