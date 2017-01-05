@@ -1,0 +1,16 @@
+{
+  
+  "spec_files": [
+    "/src/dateInput/**[sS]pec.js"
+  ],
+  "files": [
+    "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js",
+    "/demo/js/ui-controls.js"
+
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}
