@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "angular": "1.6.1",
-    "angular-mock": "1.0.0",
+    "angular-mock": "^1.0.0",
     "angular-sanitize": "1.6.1",
     "jasmine": "2.5.2",
     "karma": "^1.3.0",

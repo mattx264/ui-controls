@@ -15,7 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js',
+      'node_modules/angular/angular.min.js',
+      'node_modules/angular-mock/angular-mocks.js',
+      'src/index.js',
+      'src/dateInput/dateInput.js',
       'src/**/*.spec.js'
     ],
 
@@ -56,8 +59,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
-
+    browsers: ['Chrome'],
+    //browsers: ['Chrome', 'Firefox'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
