@@ -2,19 +2,20 @@
     'use strict';
     function showPassword() {
         return {
-            scope: {},
+            scope: {passwordid:'='},
             link: function (scope, element, attrs, ctrl) {
                 //init show password
-                var passwordVisible = false;
+               
+                scope.passwordVisible = false;
                 element.bind('click', function() {
-                    if (passwordVisible == false) {
+                    if (scope.passwordVisible == false) {
                         $('#' + attrs.passwordid).removeAttr('type');
                         $('#' + attrs.passwordid).prop('type', 'text');
-                        passwordVisible = true;
+                        scope.passwordVisible = true;
                     } else {
                         $('#' + attrs.passwordid).removeAttr('type');
                         $('#' + attrs.passwordid).prop('type', 'password');
-                        passwordVisible = false;
+                        scope.passwordVisible = false;
                     }
                 });
 

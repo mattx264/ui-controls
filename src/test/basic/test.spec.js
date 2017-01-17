@@ -29,7 +29,7 @@ describe("TEST FOR !NO! ISOLATE SCOPE", function () {
     scope.$digest();
 
     var spanElement = directiveElem.find('span');
-    console.log(spanElement.text())
+   // console.log(spanElement.text())
     expect(spanElement).toBeDefined();
     expect(spanElement.text()).toEqual(scope.text);
   });

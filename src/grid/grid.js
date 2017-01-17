@@ -1,7 +1,5 @@
 ﻿(function () {
-
     'use strict';
-
     function grid($filter) {
         return {
             templateUrl: 'src/grid/grid.html',

@@ -48,9 +48,9 @@ describe("Testing Require, Transclude and Replace", function () {
   //transclude
   it('should have an ng-transclude directive in it', function () {
     var transclude= getCompiledElement('<eighth-directive></eighth-directive>');
-     console.log(transclude)
+    // console.log(transclude)
     var transcludeElem = transclude.find('div[ng-transclude=""]');
-     console.log(transcludeElem.length)
+   //  console.log(transcludeElem.length)
    // expect(transcludeElem.length).toBe(1);
   });
 

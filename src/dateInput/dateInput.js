@@ -24,9 +24,11 @@
                             if (newVal != null) {
                                 if (scope.ngModel != null) {
                                     var date = scope.ngModel.split('/');
+                                   
                                     scope.dateinput1 = date[0];
                                     scope.dateinput2 = date[1];
                                     scope.dateinput3 = date[2];
+                                   
                                 }
                                 unbindWatcher();//after init we dont need it
                             }
@@ -46,7 +48,6 @@
                             }
                         });
                         scope.dateinput1Change = function (text) {
-
                             if (text == undefined) {
                                 text = $('#' + scope.idOfElement + ' .dateinput1').val();
                             }
@@ -229,7 +230,6 @@
 
 
                         controller.$parsers.unshift(function (viewValue) {
-
 
                             scope.pwdLength = scope.date1.toString().length == 4 ? true : false
                             if (scope.pwdLengt == true) { // If all is good, then…

@@ -6,7 +6,7 @@ module.exports = function (config) {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-    
+
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -17,13 +17,19 @@ module.exports = function (config) {
     files: [
       'node_modules/angular/angular.min.js',
       'node_modules/angular-mock/angular-mocks.js',
+      'node_modules/jquery/dist/jquery.slim.js',
       'src/index.js',
       'src/dateInput/dateInput.js',
-      'src/test/basic/test.js',
-      'src/test/isolateScope/test-is.js',
-      'src/test/form/test.js',
+      'src/showPassword/showPassword.js',
+      'src/grid/grid.js',
+      'src/showPassword/showPassword.spec.js',
+      'src/dateInput/dataInput.spec.js',
+      'src/grid/grid.spec.js',
+      // 'src/test/basic/test.js',
+      // 'src/test/isolateScope/test-is.js',
+      //  'src/test/form/test.js',
       'src/**/*.html',
-      'src/**/*.spec.js'
+      //  'src/**/*.spec.js'
     ],
 
 
@@ -76,17 +82,17 @@ module.exports = function (config) {
     concurrency: Infinity,
     ngHtml2JsPreprocessor: {
       // strip this from the file path
-     // stripPrefix: 'public/',
-     // stripSuffix: '.ext',
+      // stripPrefix: 'public/',
+      // stripSuffix: '.ext',
       // prepend this to the
-     // prependPrefix: 'served/',
+      // prependPrefix: 'served/',
 
       // or define a custom transform function
       // - cacheId returned is used to load template
       //   module(cacheId) will return template at filepath
-     // cacheIdFromPath: function (filepath) {
-        // example strips 'public/' from anywhere in the path
-        // module(app/templates/template.html) => app/public/templates/template.html
+      // cacheIdFromPath: function (filepath) {
+      // example strips 'public/' from anywhere in the path
+      // module(app/templates/template.html) => app/public/templates/template.html
       //  var cacheId = filepath.strip('public/', '');
       //  return cacheId;
       //},
